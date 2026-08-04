@@ -10,7 +10,8 @@ const content = {
     eyebrow: "Perniagaan digital, dipermudah",
     headlineA: "Satu aplikasi.", headlineB: "Pelbagai peluang.",
     intro: "Jadikan telefon anda sebuah kedai digital. Jual reload, bayar bil dan tawarkan voucher kepada pelanggan—bila-bila masa, di mana sahaja.",
-    start: "Mula percuma", explore: "Terokai myKedai", scroll: "GULIR UNTUK TEROKAI",
+    start: "Mula percuma", explore: "Masuk pengalaman", scroll: "GULIR UNTUK TEROKAI",
+    signal: "Perniagaan bukan statik.", signalAccent: "Ia sentiasa bergerak.", signalBody: "Setiap reload, setiap bil dan setiap pelanggan menggerakkan kedai anda ke hadapan.",
     trust: ["Tiada yuran pendaftaran", "Transaksi masa nyata", "Dibina untuk Malaysia"],
     marquee: ["RELOAD", "BAYARAN BIL", "E-WALLET", "VOUCHER DIGITAL", "DATA"],
     storyKicker: "SATU KEDAI DALAM POKET ANDA", storyTitle: "Semua yang anda perlukan untuk berniaga.",
@@ -42,7 +43,8 @@ const content = {
     eyebrow: "Digital business, made simple",
     headlineA: "One app.", headlineB: "Many opportunities.",
     intro: "Turn your phone into a digital store. Sell reloads, pay bills and offer vouchers to customers—anytime, anywhere.",
-    start: "Start for free", explore: "Explore myKedai", scroll: "SCROLL TO EXPLORE",
+    start: "Start for free", explore: "Enter the experience", scroll: "SCROLL TO EXPLORE",
+    signal: "Business is not static.", signalAccent: "It is always moving.", signalBody: "Every reload, every bill and every customer moves your store forward.",
     trust: ["No registration fees", "Real-time transactions", "Built for Malaysia"],
     marquee: ["RELOAD", "BILL PAYMENT", "E-WALLET", "DIGITAL VOUCHERS", "DATA"],
     storyKicker: "A STORE IN YOUR POCKET", storyTitle: "Everything you need to do business.",
@@ -94,6 +96,64 @@ function StoreButton({ store, label }: { store: string; label: string }) {
   return <a className="store-button" href={href} target="_blank" rel="noreferrer"><span>{store === "Google Play" ? "▶" : "●"}</span><small>{label}<b>{store}</b></small></a>;
 }
 
+function KineticCanvas() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    let frame = 0;
+    let animation = 0;
+    let pointerX = .65;
+    let pointerY = .45;
+    const resize = () => {
+      const ratio = Math.min(devicePixelRatio, 2);
+      canvas.width = innerWidth * ratio;
+      canvas.height = innerHeight * ratio;
+      canvas.style.width = innerWidth + "px";
+      canvas.style.height = innerHeight + "px";
+      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    };
+    const move = (event: PointerEvent) => { pointerX = event.clientX / innerWidth; pointerY = event.clientY / innerHeight; };
+    const draw = () => {
+      const width = innerWidth;
+      const height = innerHeight;
+      context.clearRect(0, 0, width, height);
+      context.globalCompositeOperation = "lighter";
+      for (let ribbon = 0; ribbon < 7; ribbon++) {
+        const phase = frame * .008 + ribbon * .62;
+        const startY = height * (.23 + ribbon * .075);
+        context.beginPath();
+        context.moveTo(-80, startY + Math.sin(phase) * 35);
+        for (let x = -80; x <= width + 80; x += 38) {
+          const normalized = x / width;
+          const pull = Math.exp(-Math.pow(normalized - pointerX, 2) * 8) * (pointerY - .5) * 220;
+          const y = startY + Math.sin(normalized * 7 + phase) * (60 + ribbon * 4) + pull;
+          context.lineTo(x, y);
+        }
+        const gradient = context.createLinearGradient(0, 0, width, 0);
+        gradient.addColorStop(0, "rgba(237,48,40,0)");
+        gradient.addColorStop(.35, "rgba(237,48,40,.18)");
+        gradient.addColorStop(.62, ribbon % 2 ? "rgba(255,180,74,.75)" : "rgba(255,62,42,.72)");
+        gradient.addColorStop(1, "rgba(111,70,255,0)");
+        context.strokeStyle = gradient;
+        context.lineWidth = ribbon === 3 ? 2.2 : .7;
+        context.shadowColor = ribbon % 2 ? "#ffb14a" : "#ed3028";
+        context.shadowBlur = ribbon === 3 ? 26 : 10;
+        context.stroke();
+      }
+      context.globalCompositeOperation = "source-over";
+      frame++;
+      animation = requestAnimationFrame(draw);
+    };
+    resize(); draw();
+    window.addEventListener("resize", resize); window.addEventListener("pointermove", move);
+    return () => { cancelAnimationFrame(animation); window.removeEventListener("resize", resize); window.removeEventListener("pointermove", move); };
+  }, []);
+  return <canvas className="kinetic-canvas" ref={canvasRef} aria-hidden="true" />;
+}
+
 export default function Home() {
   const [lang, setLang] = useState<Lang>("ms");
   const [activeFeature, setActiveFeature] = useState(0);
@@ -129,23 +189,33 @@ export default function Home() {
     </header>
 
     <section className="hero" id="top" ref={heroRef} onPointerMove={moveHero}>
+      <KineticCanvas />
       <div className="hero-grid" aria-hidden="true" />
-      <div className="hero-orbit orbit-a" /><div className="hero-orbit orbit-b" />
       <div className="hero-copy reveal">
         <p className="eyebrow"><span>●</span>{t.eyebrow}</p>
         <h1><span>{t.headlineA}</span><em>{t.headlineB}</em></h1>
         <p className="hero-intro">{t.intro}</p>
         <div className="hero-actions"><a className="primary-btn" href="#download">{t.start}<span>↗</span></a><a className="text-btn" href="#story">{t.explore}<span>↓</span></a></div>
       </div>
-      <div className="hero-product" aria-hidden="true">
-        <div className="float-card card-one"><span>RELOAD</span><b>RM 30.00</b><small>BERJAYA · SUCCESS</small></div>
-        <div className="hero-phone"><div className="hero-notch"/><div className="hero-screen"><div><span className="mini-logo">K</span><b>myKedai</b></div><small>AVAILABLE BALANCE</small><strong>RM 478.15</strong><div className="quick-grid">{["↗", "▦", "◉", "✦"].map(x => <span key={x}>{x}</span>)}</div></div></div>
-        <div className="float-card card-two"><span>MY POINTS</span><b>2,480</b><small>READY TO REDEEM</small></div>
+      <div className="hero-object" aria-hidden="true">
+        <div className="object-ring ring-one"/><div className="object-ring ring-two"/><div className="object-ring ring-three"/>
+        <div className="digital-coin"><div className="coin-face"><span>K</span><small>MYKEDAI<br/>DIGITAL STORE</small></div><div className="coin-edge"/></div>
+        <div className="object-label label-a"><span>01</span> RELOAD <b>↗</b></div>
+        <div className="object-label label-b"><span>02</span> BILLS <b>↗</b></div>
+        <div className="object-label label-c"><span>03</span> VOUCHER <b>↗</b></div>
       </div>
       <div className="hero-bottom"><p>{t.trust.map(x => <span key={x}>✓ {x}</span>)}</p><a href="#story">{t.scroll}<i>↓</i></a></div>
     </section>
 
     <div className="marquee" aria-hidden="true"><div>{[...t.marquee, ...t.marquee].map((x, i) => <span key={i}>{x}<i>✦</i></span>)}</div></div>
+
+    <section className="signal-section">
+      <div className="signal-noise" />
+      <p className="signal-index">01—MOTION / GERAKAN</p>
+      <div className="signal-copy reveal"><h2>{t.signal}<br/><em>{t.signalAccent}</em></h2><p>{t.signalBody}</p></div>
+      <div className="signal-orb" aria-hidden="true"><div/><span>K</span></div>
+      <div className="signal-readout"><span>LIVE</span><b>∞</b><small>TRANSACTIONS<br/>IN MOTION</small></div>
+    </section>
 
     <section className="story" id="story">
       <div className="story-stage"><div className="story-heading"><p>{t.storyKicker}</p><h2>{t.storyTitle}</h2></div><Phone active={activeFeature} labels={t.stageLabels}/><div className="story-index"><b>0{activeFeature + 1}</b><span>/04</span></div></div>
