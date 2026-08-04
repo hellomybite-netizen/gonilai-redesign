@@ -1,164 +1,186 @@
-const products = [
-  { icon: "↗", name: "Reload", note: "Malaysia & antarabangsa" },
-  { icon: "▣", name: "Bayaran bil", note: "Urus bil dengan mudah" },
-  { icon: "◈", name: "E-Wallet", note: "Tambah nilai dompet digital" },
-  { icon: "✦", name: "Voucher", note: "Shopping & gaming" },
-];
+"use client";
 
-const benefits = [
-  ["01", "Percuma untuk bermula", "Tiada yuran pendaftaran. Buka akaun dan mula bina perniagaan digital anda."],
-  ["02", "Transaksi masa nyata", "Semak pembelian dan sejarah transaksi dengan jelas, pada bila-bila masa."],
-  ["03", "Lebih banyak cara top up", "Tambah nilai wallet melalui FPX, JomPAY atau pindahan bank."],
-  ["04", "Ganjaran untuk setiap jualan", "Kumpul mata myKedai dan tebus untuk menikmati lebih banyak keuntungan."],
-];
+import { useEffect, useRef, useState } from "react";
 
-const steps = [
-  ["1", "Muat turun aplikasi", "Dapatkan myKedai di Google Play atau App Store."],
-  ["2", "Daftar & sahkan akaun", "Lengkapkan pendaftaran dan proses pengesahan KYC."],
-  ["3", "Tambah nilai wallet", "Pilih kaedah pembayaran yang paling mudah untuk anda."],
-  ["4", "Mula menjual", "Jual reload, bil dan voucher kepada pelanggan anda."],
-];
+type Lang = "ms" | "en";
 
-const faqs = [
-  ["Adakah pendaftaran myKedai percuma?", "Ya. Tiada yuran pendaftaran untuk membuka akaun myKedai."],
-  ["Apakah yang boleh saya jual?", "Anda boleh menawarkan reload prabayar, pembayaran bil, tambah nilai e-wallet, data dan pelbagai voucher digital."],
-  ["Bagaimana saya menambah nilai wallet?", "Wallet boleh ditambah nilai melalui FPX, JomPAY atau pindahan bank. Kaedah yang tersedia mungkin berbeza mengikut jumlah."],
-  ["Mengapa saya perlu melengkapkan KYC?", "KYC membantu mengesahkan identiti pengguna serta melindungi akaun dan dana daripada penyalahgunaan."],
-];
+const content = {
+  ms: {
+    nav: ["Produk", "Cara ia berfungsi", "Kelebihan", "Bantuan"],
+    eyebrow: "Perniagaan digital, dipermudah",
+    headlineA: "Satu aplikasi.", headlineB: "Pelbagai peluang.",
+    intro: "Jadikan telefon anda sebuah kedai digital. Jual reload, bayar bil dan tawarkan voucher kepada pelanggan—bila-bila masa, di mana sahaja.",
+    start: "Mula percuma", explore: "Terokai myKedai", scroll: "GULIR UNTUK TEROKAI",
+    trust: ["Tiada yuran pendaftaran", "Transaksi masa nyata", "Dibina untuk Malaysia"],
+    marquee: ["RELOAD", "BAYARAN BIL", "E-WALLET", "VOUCHER DIGITAL", "DATA"],
+    storyKicker: "SATU KEDAI DALAM POKET ANDA", storyTitle: "Semua yang anda perlukan untuk berniaga.",
+    features: [
+      { n: "01", title: "Tambah nilai tanpa menunggu.", body: "Isi wallet melalui FPX, JomPAY atau pindahan bank, kemudian teruskan perniagaan anda." },
+      { n: "02", title: "Jual produk yang pelanggan mahu.", body: "Akses reload tempatan dan antarabangsa, bil, e-wallet, data dan voucher dari satu tempat." },
+      { n: "03", title: "Setiap transaksi, lebih jelas.", body: "Semak sejarah, status dan resit. Kongsi bukti pembayaran terus kepada pelanggan." },
+      { n: "04", title: "Jual lebih, nikmati lebih.", body: "Kumpul mata myKedai daripada transaksi dan tebus ganjaran untuk meningkatkan keuntungan." },
+    ],
+    stageLabels: ["Baki wallet", "Produk popular", "Resit digital", "Mata myKedai"],
+    productKicker: "PELUANG TANPA SEMPADAN", productTitle: "Apa yang boleh anda jual hari ini?", productBody: "Pilih kategori untuk melihat bagaimana satu aplikasi membuka lebih banyak peluang pendapatan.",
+    products: [
+      { icon: "↗", name: "Reload", sub: "10 negara", desc: "Tambah nilai nombor tempatan dan antarabangsa dengan pantas." },
+      { icon: "▦", name: "Bayaran bil", sub: "Setiap hari", desc: "Bantu pelanggan menyelesaikan bil penting dari satu aplikasi." },
+      { icon: "◉", name: "E-Wallet", sub: "Mudah", desc: "Tambah nilai dompet digital popular tanpa proses yang rumit." },
+      { icon: "✦", name: "Voucher", sub: "Lebih pilihan", desc: "Tawarkan voucher shopping, gaming dan gaya hidup digital." },
+    ],
+    howKicker: "DARIPADA MUAT TURUN KE JUALAN PERTAMA", howTitle: "Empat langkah. Itu sahaja.",
+    steps: [["01", "Muat turun", "Dapatkan aplikasi myKedai."], ["02", "Daftar", "Sahkan akaun melalui KYC."], ["03", "Tambah nilai", "Isi baki wallet anda."], ["04", "Mula menjual", "Layani pelanggan pertama anda."]],
+    proofLead: "Kedai kecil. Cita-cita besar.", proofBody: "myKedai memberi peniaga alat digital yang ringkas untuk menjana pendapatan di mana sahaja mereka berada.",
+    stats: [["104k+", "muat turun"], ["10", "negara"], ["RM3.9M", "nilai transaksi"]],
+    faqKicker: "BANTUAN", faqTitle: "Perkara yang sering ditanya.",
+    faqs: [["Adakah pendaftaran percuma?", "Ya. Tiada yuran pendaftaran untuk membuka akaun myKedai."], ["Bagaimana saya menambah nilai wallet?", "Gunakan FPX, JomPAY atau pindahan bank. Ketersediaan kaedah mungkin bergantung pada jumlah."], ["Mengapa KYC diperlukan?", "KYC membantu mengesahkan identiti serta melindungi akaun dan dana daripada penyalahgunaan."], ["Apakah perbezaan pengguna BASIC dan ADVANCE?", "BASIC mempunyai had transaksi harian, manakala ADVANCE membuka akses transaksi yang lebih tinggi selepas pengesahan tambahan."]],
+    ctaKicker: "KEDAI ANDA SEDIA DIBUKA", ctaTitle: "Mulakan dari telefon yang sudah ada di tangan anda.", ctaBody: "Muat turun myKedai. Daftar percuma. Bina pendapatan anda sendiri.",
+    download: "Muat turun di", footer: "Rakan perniagaan digital anda untuk reload, bil dan voucher.", rights: "Hak cipta terpelihara.", caveat: "Angka berdasarkan laman myKedai semasa; sahkan sebelum penerbitan.",
+  },
+  en: {
+    nav: ["Products", "How it works", "Benefits", "Help"],
+    eyebrow: "Digital business, made simple",
+    headlineA: "One app.", headlineB: "Many opportunities.",
+    intro: "Turn your phone into a digital store. Sell reloads, pay bills and offer vouchers to customers—anytime, anywhere.",
+    start: "Start for free", explore: "Explore myKedai", scroll: "SCROLL TO EXPLORE",
+    trust: ["No registration fees", "Real-time transactions", "Built for Malaysia"],
+    marquee: ["RELOAD", "BILL PAYMENT", "E-WALLET", "DIGITAL VOUCHERS", "DATA"],
+    storyKicker: "A STORE IN YOUR POCKET", storyTitle: "Everything you need to do business.",
+    features: [
+      { n: "01", title: "Top up without the wait.", body: "Fund your wallet through FPX, JomPAY or bank transfer, then get straight back to business." },
+      { n: "02", title: "Sell what customers want.", body: "Access local and international reloads, bills, e-wallets, data and vouchers in one place." },
+      { n: "03", title: "Every transaction, made clear.", body: "Review history, status and receipts. Share proof of payment directly with your customers." },
+      { n: "04", title: "Sell more, enjoy more.", body: "Collect myKedai points from transactions and redeem rewards to grow your earnings." },
+    ],
+    stageLabels: ["Wallet balance", "Popular products", "Digital receipt", "myKedai points"],
+    productKicker: "OPPORTUNITY WITHOUT BORDERS", productTitle: "What can you sell today?", productBody: "Choose a category to see how one app opens more ways to earn.",
+    products: [
+      { icon: "↗", name: "Reload", sub: "10 countries", desc: "Top up local and international numbers in moments." },
+      { icon: "▦", name: "Bill payment", sub: "Every day", desc: "Help customers settle essential bills from one app." },
+      { icon: "◉", name: "E-Wallet", sub: "Simple", desc: "Top up popular digital wallets without complicated steps." },
+      { icon: "✦", name: "Vouchers", sub: "More choice", desc: "Offer shopping, gaming and digital lifestyle vouchers." },
+    ],
+    howKicker: "FROM DOWNLOAD TO FIRST SALE", howTitle: "Four steps. That is all.",
+    steps: [["01", "Download", "Get the myKedai app."], ["02", "Register", "Verify your account through KYC."], ["03", "Top up", "Fund your digital wallet."], ["04", "Start selling", "Serve your first customer."]],
+    proofLead: "Small store. Big ambition.", proofBody: "myKedai gives merchants simple digital tools to earn wherever they are.",
+    stats: [["104k+", "downloads"], ["10", "countries"], ["RM3.9M", "transaction value"]],
+    faqKicker: "HELP", faqTitle: "Things people often ask.",
+    faqs: [["Is registration free?", "Yes. There is no registration fee to open a myKedai account."], ["How do I fund my wallet?", "Use FPX, JomPAY or a bank transfer. Method availability may depend on the amount."], ["Why is KYC required?", "KYC helps verify identity and protects accounts and funds against misuse."], ["What is the difference between BASIC and ADVANCE?", "BASIC has a daily transaction limit, while ADVANCE enables higher transaction access after additional verification."]],
+    ctaKicker: "YOUR STORE IS READY TO OPEN", ctaTitle: "Start with the phone already in your hand.", ctaBody: "Download myKedai. Register free. Build an income of your own.",
+    download: "Download on", footer: "Your digital business partner for reloads, bills and vouchers.", rights: "All rights reserved.", caveat: "Figures are based on the current myKedai site; verify before production release.",
+  },
+};
 
-function StoreButton({ store, href }: { store: string; href: string }) {
-  return (
-    <a className="store-button" href={href} target="_blank" rel="noreferrer" aria-label={"Muat turun myKedai di " + store}>
-      <span className="store-icon" aria-hidden="true">{store === "Google Play" ? "▶" : "●"}</span>
-      <span><small>Muat turun di</small><strong>{store}</strong></span>
-    </a>
-  );
+function Phone({ active, labels }: { active: number; labels: string[] }) {
+  return <div className="device-wrap" aria-live="polite">
+    <div className="device-glow" />
+    <div className="device">
+      <div className="device-notch" />
+      <div className="device-screen">
+        <div className="app-header"><span className="mini-logo">K</span><b>myKedai</b><i>•••</i></div>
+        <div className="screen-label"><span>0{active + 1}</span>{labels[active]}</div>
+        {active === 0 && <div className="screen-scene wallet-scene"><small>AVAILABLE BALANCE</small><strong>RM 478.15</strong><button>+ TOP UP</button><div className="wave" /></div>}
+        {active === 1 && <div className="screen-scene product-scene">{["↗", "▦", "◉", "✦", "#", "+"].map((x, i) => <div key={i}><span>{x}</span><small>{["Reload", "Bills", "Wallet", "Voucher", "Data", "More"][i]}</small></div>)}</div>}
+        {active === 2 && <div className="screen-scene receipt-scene"><div className="success">✓</div><b>TRANSACTION SUCCESSFUL</b><strong>RM 30.00</strong><p>Reload Mobile · 6012 345 6789</p><button>SHARE RECEIPT</button></div>}
+        {active === 3 && <div className="screen-scene points-scene"><span>MY POINTS</span><strong>2,480</strong><div className="coin">K</div><button>REDEEM POINTS</button></div>}
+        <div className="app-tabs"><span>⌂</span><span>◫</span><span>◎</span><span>◌</span></div>
+      </div>
+    </div>
+  </div>;
+}
+
+function StoreButton({ store, label }: { store: string; label: string }) {
+  const href = store === "Google Play" ? "https://play.google.com/store/apps/details?id=hash.myriatek.telinmy.dealer" : "https://apps.apple.com/id/app/mykedai/id1396978009";
+  return <a className="store-button" href={href} target="_blank" rel="noreferrer"><span>{store === "Google Play" ? "▶" : "●"}</span><small>{label}<b>{store}</b></small></a>;
 }
 
 export default function Home() {
-  return (
-    <main>
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="myKedai halaman utama">
-          <span className="brand-mark" aria-hidden="true">K</span>
-          <span>myKedai</span>
-        </a>
-        <nav aria-label="Navigasi utama">
-          <a href="#produk">Produk</a>
-          <a href="#cara">Cara bermula</a>
-          <a href="#kelebihan">Kelebihan</a>
-          <a href="#faq">Bantuan</a>
-        </nav>
-        <a className="header-cta" href="#mula">Mula percuma <span aria-hidden="true">↗</span></a>
-      </header>
+  const [lang, setLang] = useState<Lang>("ms");
+  const [activeFeature, setActiveFeature] = useState(0);
+  const [activeProduct, setActiveProduct] = useState(0);
+  const heroRef = useRef<HTMLElement>(null);
+  const t = content[lang];
 
-      <section className="hero" id="top">
-        <div className="hero-copy">
-          <div className="eyebrow"><span /> Platform untuk peniaga Malaysia</div>
-          <h1>Kedai digital anda,<br /><em>dalam satu aplikasi.</em></h1>
-          <p>Jual reload, bayar bil dan tawarkan voucher digital kepada pelanggan—di mana sahaja anda berada.</p>
-          <div className="hero-actions" id="mula">
-            <StoreButton store="Google Play" href="https://play.google.com/store/apps/details?id=hash.myriatek.telinmy.dealer" />
-            <StoreButton store="App Store" href="https://apps.apple.com/id/app/mykedai/id1396978009" />
-          </div>
-          <div className="trust-line"><span>✓ Tiada yuran pendaftaran</span><span>✓ Transaksi masa nyata</span></div>
-        </div>
+  useEffect(() => {
+    const onScroll = () => {
+      document.documentElement.style.setProperty("--scroll-y", String(window.scrollY));
+      document.documentElement.style.setProperty("--progress", String(Math.min(1, window.scrollY / (document.body.scrollHeight - innerHeight))));
+    };
+    const reveal = new IntersectionObserver((entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("is-visible")), { threshold: .12 });
+    document.querySelectorAll(".reveal").forEach((el) => reveal.observe(el));
+    const featureObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) setActiveFeature(Number((entry.target as HTMLElement).dataset.feature)); }), { rootMargin: "-35% 0px -45% 0px", threshold: 0 });
+    document.querySelectorAll("[data-feature]").forEach((el) => featureObserver.observe(el));
+    window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+    return () => { window.removeEventListener("scroll", onScroll); reveal.disconnect(); featureObserver.disconnect(); };
+  }, []);
 
-        <div className="hero-visual" aria-label="Pratinjau aplikasi myKedai">
-          <div className="orbit orbit-one" />
-          <div className="orbit orbit-two" />
-          <div className="profit-card"><small>Potensi keuntungan</small><strong>Sehingga 10%</strong><span>pada produk terpilih</span></div>
-          <div className="phone">
-            <div className="speaker" />
-            <div className="phone-screen">
-              <div className="app-top"><span className="mini-mark">K</span><strong>myKedai</strong><span>•••</span></div>
-              <p className="hello">Selamat datang 👋</p>
-              <div className="wallet"><span>Baki wallet</span><strong>RM 478.15</strong><button type="button">+ Top up</button></div>
-              <div className="app-grid">
-                {products.map((product) => <div key={product.name}><span>{product.icon}</span><small>{product.name}</small></div>)}
-              </div>
-              <div className="recent"><span>Transaksi terkini</span><strong>Lihat semua</strong></div>
-              <div className="transaction"><i>↗</i><span><strong>Reload Mobile</strong><small>Berjaya • Hari ini</small></span><b>RM 30.00</b></div>
-            </div>
-          </div>
-        </div>
-      </section>
+  const moveHero = (event: React.PointerEvent<HTMLElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty("--mx", String((event.clientX - rect.left) / rect.width - .5));
+    event.currentTarget.style.setProperty("--my", String((event.clientY - rect.top) / rect.height - .5));
+  };
 
-      <section className="proof" aria-label="Pencapaian myKedai">
-        <p>Dipilih oleh komuniti peniaga digital</p>
-        <div><strong>104k+</strong><span>Muat turun</span></div>
-        <div><strong>10</strong><span>Negara disokong</span></div>
-        <div><strong>RM3.9M</strong><span>Nilai transaksi</span></div>
-        <small>Angka berdasarkan laman myKedai semasa; sahkan sebelum penerbitan.</small>
-      </section>
+  return <main>
+    <div className="progress-bar" />
+    <header className="site-header">
+      <a className="brand" href="#top"><span className="brand-mark">K</span><b>myKedai</b></a>
+      <nav>{t.nav.map((item, i) => <a key={item} href={["#products", "#story", "#how", "#faq"][i]}>{item}</a>)}</nav>
+      <div className="header-tools"><div className="lang-switch" aria-label="Language"><button className={lang === "ms" ? "active" : ""} onClick={() => setLang("ms")}>BM</button><button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>EN</button></div><a className="round-cta" href="#download">{t.start}<span>↗</span></a></div>
+    </header>
 
-      <section className="products section" id="produk">
-        <div className="section-heading">
-          <span className="kicker">APA YANG BOLEH DIJUAL</span>
-          <h2>Lebih banyak produk.<br />Lebih banyak peluang.</h2>
-          <p>Satu wallet untuk mengurus produk digital yang pelanggan anda perlukan setiap hari.</p>
-        </div>
-        <div className="product-grid">
-          {products.map((product, index) => (
-            <article className={index === 0 ? "featured" : ""} key={product.name}>
-              <span className="product-icon" aria-hidden="true">{product.icon}</span>
-              <div><h3>{product.name}</h3><p>{product.note}</p></div>
-              <span className="arrow" aria-hidden="true">↗</span>
-            </article>
-          ))}
-        </div>
-      </section>
+    <section className="hero" id="top" ref={heroRef} onPointerMove={moveHero}>
+      <div className="hero-grid" aria-hidden="true" />
+      <div className="hero-orbit orbit-a" /><div className="hero-orbit orbit-b" />
+      <div className="hero-copy reveal">
+        <p className="eyebrow"><span>●</span>{t.eyebrow}</p>
+        <h1><span>{t.headlineA}</span><em>{t.headlineB}</em></h1>
+        <p className="hero-intro">{t.intro}</p>
+        <div className="hero-actions"><a className="primary-btn" href="#download">{t.start}<span>↗</span></a><a className="text-btn" href="#story">{t.explore}<span>↓</span></a></div>
+      </div>
+      <div className="hero-product" aria-hidden="true">
+        <div className="float-card card-one"><span>RELOAD</span><b>RM 30.00</b><small>BERJAYA · SUCCESS</small></div>
+        <div className="hero-phone"><div className="hero-notch"/><div className="hero-screen"><div><span className="mini-logo">K</span><b>myKedai</b></div><small>AVAILABLE BALANCE</small><strong>RM 478.15</strong><div className="quick-grid">{["↗", "▦", "◉", "✦"].map(x => <span key={x}>{x}</span>)}</div></div></div>
+        <div className="float-card card-two"><span>MY POINTS</span><b>2,480</b><small>READY TO REDEEM</small></div>
+      </div>
+      <div className="hero-bottom"><p>{t.trust.map(x => <span key={x}>✓ {x}</span>)}</p><a href="#story">{t.scroll}<i>↓</i></a></div>
+    </section>
 
-      <section className="steps section" id="cara">
-        <div className="section-heading light">
-          <span className="kicker">MUDAH UNTUK BERMULA</span>
-          <h2>Dari daftar hingga jualan pertama.</h2>
-          <p>Empat langkah ringkas untuk membuka kedai digital anda.</p>
-        </div>
-        <div className="step-grid">
-          {steps.map((step) => <article key={step[0]}><span>{step[0]}</span><h3>{step[1]}</h3><p>{step[2]}</p></article>)}
-        </div>
-      </section>
+    <div className="marquee" aria-hidden="true"><div>{[...t.marquee, ...t.marquee].map((x, i) => <span key={i}>{x}<i>✦</i></span>)}</div></div>
 
-      <section className="benefits section" id="kelebihan">
-        <div className="benefit-intro">
-          <span className="kicker">DIBINA UNTUK PENIAGA</span>
-          <h2>Berniaga dengan lebih mudah dan yakin.</h2>
-          <p>Alat yang ringkas untuk membantu anda melayan pelanggan, menjejak transaksi dan mengembangkan pendapatan.</p>
-          <a href="#mula">Buka kedai digital anda <span aria-hidden="true">→</span></a>
-        </div>
-        <div className="benefit-list">
-          {benefits.map((benefit) => <article key={benefit[0]}><span>{benefit[0]}</span><div><h3>{benefit[1]}</h3><p>{benefit[2]}</p></div></article>)}
-        </div>
-      </section>
+    <section className="story" id="story">
+      <div className="story-stage"><div className="story-heading"><p>{t.storyKicker}</p><h2>{t.storyTitle}</h2></div><Phone active={activeFeature} labels={t.stageLabels}/><div className="story-index"><b>0{activeFeature + 1}</b><span>/04</span></div></div>
+      <div className="story-copy">{t.features.map((feature, i) => <article data-feature={i} key={feature.n}><span>{feature.n}</span><h3>{feature.title}</h3><p>{feature.body}</p></article>)}</div>
+    </section>
 
-      <section className="faq section" id="faq">
-        <div className="section-heading">
-          <span className="kicker">SOALAN LAZIM</span>
-          <h2>Ada soalan?<br />Kami ada jawapan.</h2>
-        </div>
-        <div className="faq-list">
-          {faqs.map((faq) => <details key={faq[0]}><summary>{faq[0]}<span aria-hidden="true">+</span></summary><p>{faq[1]}</p></details>)}
-        </div>
-      </section>
+    <section className="product-lab" id="products">
+      <div className="lab-head reveal"><p>{t.productKicker}</p><h2>{t.productTitle}</h2><span>{t.productBody}</span></div>
+      <div className="lab-window reveal">
+        <div className="lab-menu">{t.products.map((product, i) => <button key={product.name} className={activeProduct === i ? "active" : ""} onClick={() => setActiveProduct(i)}><span>0{i+1}</span>{product.name}</button>)}</div>
+        <div className="lab-card"><div className="lab-symbol">{t.products[activeProduct].icon}</div><div><small>{t.products[activeProduct].sub}</small><h3>{t.products[activeProduct].name}</h3><p>{t.products[activeProduct].desc}</p></div><span className="lab-arrow">↗</span></div>
+      </div>
+    </section>
 
-      <section className="final-cta">
-        <span className="kicker">BERNIAGA DARI MANA SAHAJA</span>
-        <h2>Sedia membuka kedai digital anda?</h2>
-        <p>Muat turun myKedai dan mulakan secara percuma hari ini.</p>
-        <div className="hero-actions">
-          <StoreButton store="Google Play" href="https://play.google.com/store/apps/details?id=hash.myriatek.telinmy.dealer" />
-          <StoreButton store="App Store" href="https://apps.apple.com/id/app/mykedai/id1396978009" />
-        </div>
-      </section>
+    <section className="how" id="how">
+      <div className="how-title reveal"><p>{t.howKicker}</p><h2>{t.howTitle}</h2></div>
+      <div className="steps">{t.steps.map((step, i) => <article className="reveal" style={{transitionDelay: i * 80 + "ms"}} key={step[0]}><span>{step[0]}</span><div className="step-dot">{i + 1}</div><h3>{step[1]}</h3><p>{step[2]}</p></article>)}</div>
+    </section>
 
-      <footer>
-        <a className="brand footer-brand" href="#top"><span className="brand-mark">K</span><span>myKedai</span></a>
-        <p>Rakan perniagaan digital anda untuk reload, bayaran bil dan voucher.</p>
-        <div><a href="#produk">Produk</a><a href="#cara">Cara bermula</a><a href="#faq">Bantuan</a></div>
-        <small>© 2026 myKedai. Hak cipta terpelihara.</small>
-      </footer>
-      <a className="mobile-cta" href="#mula">Mula percuma <span>↗</span></a>
-    </main>
-  );
+    <section className="proof-section">
+      <div className="proof-copy reveal"><p>{t.proofLead}</p><h2>{t.proofBody}</h2></div>
+      <div className="stats">{t.stats.map((stat, i) => <div key={stat[0]}><span>0{i+1}</span><strong>{stat[0]}</strong><p>{stat[1]}</p></div>)}</div><small>{t.caveat}</small>
+    </section>
+
+    <section className="faq" id="faq">
+      <div className="faq-title reveal"><p>{t.faqKicker}</p><h2>{t.faqTitle}</h2></div>
+      <div className="faq-list">{t.faqs.map((item, i) => <details className="reveal" key={item[0]}><summary><span>0{i+1}</span>{item[0]}<i>+</i></summary><p>{item[1]}</p></details>)}</div>
+    </section>
+
+    <section className="download" id="download">
+      <div className="download-rings" /><div className="download-copy reveal"><p>{t.ctaKicker}</p><h2>{t.ctaTitle}</h2><span>{t.ctaBody}</span><div><StoreButton store="Google Play" label={t.download}/><StoreButton store="App Store" label={t.download}/></div></div>
+      <div className="download-device"><Phone active={1} labels={t.stageLabels}/></div>
+    </section>
+
+    <footer><a className="brand" href="#top"><span className="brand-mark">K</span><b>myKedai</b></a><p>{t.footer}</p><div>{t.nav.map((x,i)=><a key={x} href={["#products", "#story", "#how", "#faq"][i]}>{x}</a>)}</div><small>© 2026 myKedai. {t.rights}</small></footer>
+    <a className="mobile-cta" href="#download">{t.start}<span>↗</span></a>
+  </main>;
 }

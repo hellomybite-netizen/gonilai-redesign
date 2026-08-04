@@ -9,15 +9,15 @@ export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
   const host = requestHeaders.get("host") || "mykedai.com.my";
   const protocol = requestHeaders.get("x-forwarded-proto") || (host.includes("localhost") ? "http" : "https");
-  const imageUrl = protocol + "://" + host + "/og.png";
+  const imageUrl = protocol + "://" + host + "/og-v2.png";
 
   return {
-    title: "myKedai — Kedai digital anda, dalam satu aplikasi",
-    description: "Jual reload, bayar bil dan tawarkan voucher digital kepada pelanggan melalui aplikasi myKedai.",
+    title: "myKedai — Satu aplikasi. Pelbagai peluang.",
+    description: "BM/EN — Jual reload, bayar bil dan tawarkan voucher digital kepada pelanggan melalui aplikasi myKedai.",
     openGraph: {
-      title: "myKedai — Kedai digital anda",
-      description: "Mulakan perniagaan reload, bil dan voucher dari telefon anda.",
-      images: [{ url: imageUrl, width: 1536, height: 1024, alt: "myKedai — Kedai digital anda" }],
+      title: "myKedai — Satu aplikasi. Pelbagai peluang.",
+      description: "One app. Many opportunities. Mulakan perniagaan digital dari telefon anda.",
+      images: [{ url: imageUrl, width: 1536, height: 1024, alt: "myKedai — Satu aplikasi. Pelbagai peluang." }],
       locale: "ms_MY",
       type: "website",
     },
