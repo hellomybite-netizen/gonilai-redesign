@@ -183,7 +183,7 @@ export default function Home() {
   return <main>
     <div className="progress-bar" />
     <header className="site-header">
-      <a className="brand" href="#top"><span className="brand-mark">K</span><b>myKedai</b></a>
+      <a className="brand" href="#top"><img className="brand-logo" src="/mykedai-logo-mobile.png" alt="myKedai" /></a>
       <nav>{t.nav.map((item, i) => <a key={item} href={["#products", "#story", "#how", "#faq"][i]}>{item}</a>)}</nav>
       <div className="header-tools"><div className="lang-switch" aria-label="Language"><button className={lang === "ms" ? "active" : ""} onClick={() => setLang("ms")}>BM</button><button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>EN</button></div><a className="round-cta" href="#download">{t.start}<span>↗</span></a></div>
     </header>
@@ -250,7 +250,7 @@ export default function Home() {
       <div className="download-device"><Phone active={1} labels={t.stageLabels}/></div>
     </section>
 
-    <footer><a className="brand" href="#top"><span className="brand-mark">K</span><b>myKedai</b></a><p>{t.footer}</p><div>{t.nav.map((x,i)=><a key={x} href={["#products", "#story", "#how", "#faq"][i]}>{x}</a>)}</div><small>© 2026 myKedai. {t.rights}</small></footer>
+    <footer><a className="brand" href="#top"><img className="brand-logo" src="/mykedai-logo-mobile.png" alt="myKedai" /></a><p>{t.footer}</p><div>{t.nav.map((x,i)=><a key={x} href={["#products", "#story", "#how", "#faq"][i]}>{x}</a>)}</div><small>© 2026 myKedai. {t.rights}</small></footer>
     <a className="mobile-cta" href="#download">{t.start}<span>↗</span></a>
   </main>;
 }
