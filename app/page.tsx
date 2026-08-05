@@ -183,7 +183,7 @@ export default function Home() {
   return <main>
     <div className="progress-bar" />
     <header className="site-header">
-      <a className="brand" href="#top"><img className="brand-logo" src="/mykedai-logo-mobile.png" alt="myKedai" /></a>
+      <a className="brand" href="#top"><img className="brand-logo" src="/mykedai-logo.png" alt="myKedai" /></a>
       <nav>{t.nav.map((item, i) => <a key={item} href={["#products", "#story", "#how", "#faq"][i]}>{item}</a>)}</nav>
       <div className="header-tools"><div className="lang-switch" aria-label="Language"><button className={lang === "ms" ? "active" : ""} onClick={() => setLang("ms")}>BM</button><button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>EN</button></div><a className="round-cta" href="#download">{t.start}<span>↗</span></a></div>
     </header>
@@ -199,13 +199,22 @@ export default function Home() {
       </div>
       <div className="hero-object" aria-hidden="true">
         <div className="object-ring ring-one"/><div className="object-ring ring-two"/><div className="object-ring ring-three"/>
-        <div className="digital-coin"><div className="coin-face"><span>K</span><small>MYKEDAI<br/>DIGITAL STORE</small></div><div className="coin-edge"/></div>
-        <div className="object-label label-a"><span>01</span> RELOAD <b>↗</b></div>
-        <div className="object-label label-b"><span>02</span> BILLS <b>↗</b></div>
-        <div className="object-label label-c"><span>03</span> VOUCHER <b>↗</b></div>
+        <div className="hero-phone">
+          <div className="hero-phone-screen">
+            <div className="hp-top"><span>09:41</span><b>● ● ●</b></div>
+            <small>{lang === "ms" ? "Selamat kembali" : "Welcome back"}</small>
+            <h3>{lang === "ms" ? "Kedai anda\nsedia bergerak?" : "Ready to move\nyour business?"}</h3>
+            <div className="hp-balance"><span>{lang === "ms" ? "Baki tersedia" : "Available balance"}</span><strong>RM 478.15</strong></div>
+            <div className="hp-grid"><i>↗<small>Reload</small></i><i>▦<small>Bills</small></i><i>◉<small>Wallet</small></i><i>✦<small>Voucher</small></i></div>
+          </div>
+        </div>
+        <div className="hero-float-card card-store"><small>{lang === "ms" ? "Semua dalam satu aplikasi" : "Everything in one app"}</small><b>Reload · Bills · Voucher</b></div>
+        <div className="hero-float-card card-live"><span>● LIVE</span><strong>104k+</strong><small>{lang === "ms" ? "muat turun" : "downloads"}</small></div>
       </div>
       <div className="hero-bottom"><p>{t.trust.map(x => <span key={x}>✓ {x}</span>)}</p><a href="#story">{t.scroll}<i>↓</i></a></div>
     </section>
+
+    <div className="floating-dock"><a href="#top" aria-label="Home">☰</a><span>K</span><a href="#download">{lang === "ms" ? "Muat turun" : "Download"}</a></div>
 
     <div className="marquee" aria-hidden="true"><div>{[...t.marquee, ...t.marquee].map((x, i) => <span key={i}>{x}<i>✦</i></span>)}</div></div>
 
@@ -250,7 +259,7 @@ export default function Home() {
       <div className="download-device"><Phone active={1} labels={t.stageLabels}/></div>
     </section>
 
-    <footer><a className="brand" href="#top"><img className="brand-logo" src="/mykedai-logo-mobile.png" alt="myKedai" /></a><p>{t.footer}</p><div>{t.nav.map((x,i)=><a key={x} href={["#products", "#story", "#how", "#faq"][i]}>{x}</a>)}</div><small>© 2026 myKedai. {t.rights}</small></footer>
+    <footer><a className="brand" href="#top"><img className="brand-logo" src="/mykedai-logo.png" alt="myKedai" /></a><p>{t.footer}</p><div>{t.nav.map((x,i)=><a key={x} href={["#products", "#story", "#how", "#faq"][i]}>{x}</a>)}</div><small>© 2026 myKedai. {t.rights}</small></footer>
     <a className="mobile-cta" href="#download">{t.start}<span>↗</span></a>
   </main>;
 }
