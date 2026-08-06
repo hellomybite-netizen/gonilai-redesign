@@ -328,3 +328,25 @@ footer>p,footer>small{color:#78656b}
   .country-card>small{display:none}
   .country-card>b{font-size:12px}
 }
+
+/* Six official myKedai benefits */
+.how-title{align-items:end;gap:5vw}
+.how-title h2{max-width:900px;font-size:clamp(58px,7vw,104px);text-wrap:balance}
+.steps{grid-template-columns:repeat(3,1fr);gap:12px;padding-top:14px}
+.steps article{min-height:310px;padding:30px 28px;border:1px solid rgba(118,31,48,.14);border-radius:20px;background:rgba(255,255,255,.72);box-shadow:0 18px 48px rgba(111,43,70,.06)}
+.steps article>span{font-size:9px}
+.step-dot{margin:34px 0 auto}
+.steps h3{font-size:24px;line-height:1.08;letter-spacing:-.035em}
+.steps p{max-width:34ch}
+
+@media(max-width:960px){
+  .how-title{display:block}
+  .how-title h2{margin-top:22px}
+  .steps{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:600px){
+  .how-title h2{font-size:48px}
+  .steps{grid-template-columns:1fr;gap:10px}
+  .steps article{min-height:270px;padding:26px 22px;border:1px solid rgba(118,31,48,.14)}
+}
