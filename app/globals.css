@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root{--red:#ff3340;--red2:#b80d24;--ink:#f2f1f6;--muted:#aaa8b2;--black:#08080a;--panel:#111116;--line:rgba(255,255,255,.13);--progress:0;--scroll-y:0}
-*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--black)}body{margin:0;background:var(--black);color:var(--ink);font-family:var(--font-geist),Arial,sans-serif;overflow-x:hidden}a{color:inherit;text-decoration:none}button{font:inherit}.progress-bar{position:fixed;left:0;top:0;z-index:100;width:calc(var(--progress)*100%);height:2px;background:linear-gradient(90deg,var(--red),#a27cff)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--black);overflow-x:clip}body,main{width:100%;max-width:100%;overflow-x:clip}body{margin:0;background:var(--black);color:var(--ink);font-family:var(--font-geist),Arial,sans-serif}a{color:inherit;text-decoration:none}button{font:inherit}.progress-bar{position:fixed;left:0;top:0;z-index:100;width:calc(var(--progress)*100%);height:2px;background:linear-gradient(90deg,var(--red),#a27cff)}
 
 .site-header{position:absolute;z-index:30;left:0;right:0;top:0;height:90px;padding:0 3vw;display:flex;align-items:center;justify-content:space-between}.brand-logo{width:176px;height:auto;display:block}.site-header nav{display:flex;gap:28px;font-size:12px;color:#c7c5cc}.site-header nav a{transition:.25s}.site-header nav a:hover{color:white}.header-tools{display:flex;align-items:center;gap:12px}.lang-switch{display:flex;background:rgba(255,255,255,.08);border:1px solid var(--line);padding:4px;border-radius:999px}.lang-switch button{border:0;background:none;color:#777580;border-radius:99px;padding:7px 10px;font-size:10px;cursor:pointer}.lang-switch button.active{background:white;color:#111}.round-cta{display:flex;align-items:center;gap:22px;border:1px solid var(--line);background:rgba(255,255,255,.06);padding:12px 15px 12px 18px;border-radius:999px;font-size:11px;backdrop-filter:blur(18px)}.round-cta span{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:white;color:#111}
 
@@ -34,3 +34,59 @@ footer{padding:50px 4vw 100px;background:#08080a;border-top:1px solid var(--line
 @media(max-width:600px){html,body,main{width:100%;max-width:100%;overflow-x:hidden}.site-header{height:70px;padding:0 18px}.brand-logo{width:135px}.round-cta{display:none}.hero{height:1350px;min-height:1350px}.hero-copy{height:760px;padding:92px 18px 40px}.hero h1{top:90px;left:18px;font-size:clamp(56px,17.2vw,72px);line-height:.78;white-space:normal}.hero h1 em{margin-left:0}.eyebrow{margin-top:250px}.hero-intro{max-width:92%;font-size:13px}.hero-actions{align-items:flex-start;flex-direction:column}.hero-object{top:355px;margin-left:0;width:100vw;height:750px;transform:translateY(calc(var(--scroll-y)*-.09px))}.hero-phone{left:50%;top:70px;width:240px;height:490px;transform:translateX(-50%) perspective(900px) rotateY(-15deg) rotateZ(6deg)}.hero-phone-screen{padding:28px 17px}.hero-phone-screen h3{font-size:27px}.hp-grid i{height:64px}.object-ring{left:50%;top:45%}.ring-one{width:480px;height:480px}.ring-two{width:360px;height:360px}.ring-three{width:250px;height:250px}.card-live{right:18px;bottom:70px}.hero-bottom{left:18px;right:18px;bottom:20px}.hero-bottom p{display:none}.floating-dock{width:calc(100% - 28px);grid-template-columns:55px 1fr 125px}.marquee{padding:14px 0}.signal-section{height:820px;min-height:820px;padding:80px 18px;align-items:flex-start}.signal-index{left:18px;top:40px}.signal-copy{width:100%;margin-top:40px}.signal-copy h2{font-size:clamp(53px,16vw,67px)}.signal-copy h2 em{margin-left:0}.signal-copy>p{margin:28px 0;max-width:92%}.signal-orb{width:77vw;height:77vw;right:-20vw;top:auto;bottom:90px}.signal-readout{right:18px;bottom:28px}.story{display:block;min-height:auto}.story-stage{height:700px}.story-heading{left:18px;top:40px;width:72%}.story-heading h2{font-size:31px}.story-index{left:18px}.device-wrap{transform:scale(.63);margin-left:30vw}.story-copy{padding:80px 18px}.story-copy article{min-height:580px}.story-copy h3{font-size:43px}.product-lab{padding:80px 18px}.lab-head{margin-bottom:40px}.lab-head h2{font-size:52px}.lab-window{min-height:auto;border-radius:20px}.lab-menu{grid-template-columns:1fr 1fr}.lab-menu button{font-size:13px;padding:17px 13px}.lab-card{min-height:410px;padding:30px 22px;border-radius:16px}.lab-symbol{font-size:145px}.lab-card h3{font-size:45px}.how{padding:80px 18px}.how-title{display:block}.how-title h2{font-size:52px;margin-top:20px}.steps{grid-template-columns:1fr}.steps article{min-height:270px;border-right:0;border-bottom:1px solid var(--line)}.step-dot{margin:30px 0 auto}.proof-section{padding:80px 18px 55px}.proof-copy{grid-template-columns:1fr;padding-bottom:55px}.proof-copy h2{font-size:45px}.stats{grid-template-columns:1fr}.stats>div{border-right:0;border-bottom:1px solid rgba(255,255,255,.25);padding:34px 0}.stats strong{font-size:65px;margin:12px 0}.proof-section>small{text-align:left;margin-top:25px}.faq{padding:80px 18px}.faq-title h2{font-size:52px}.faq-list summary{grid-template-columns:32px 1fr 22px;font-size:14px}.faq-list details>p{margin-left:32px}.download{min-height:850px;padding:90px 18px;display:block}.download-copy h2{font-size:55px}.download-copy>div{flex-direction:column;max-width:190px}.download-device{right:-130px;bottom:-110px}.download-device .device-wrap{transform:scale(.55)}footer{grid-template-columns:1fr;padding:40px 18px 110px;gap:14px}.mobile-cta{display:none}}
 
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.hero-phone,.hero-object{transform:none!important}}
+
+/* Responsive precision pass */
+.hero-object{position:absolute;right:0;margin-left:0}
+
+@media (min-width:601px) and (max-width:960px){
+  .hero{height:1500px;min-height:1500px}
+  .hero h1{font-size:11.4vw;max-width:calc(100vw - 38px);white-space:normal}
+  .hero-object{width:64vw;right:0}
+  .hero-phone{left:7%;top:27%}
+  .card-live{right:3vw;bottom:7%}
+  .ring-one{width:min(700px,82vw);height:min(700px,82vw)}
+  .ring-two{width:min(510px,62vw);height:min(510px,62vw)}
+  .ring-three{width:min(350px,44vw);height:min(350px,44vw)}
+  .signal-section,.story-stage,.download{overflow:hidden}
+}
+
+@media(max-width:600px){
+  .hero{height:1180px;min-height:1180px}
+  .hero-copy{height:690px;padding:92px 18px 40px}
+  .hero h1{top:90px;left:18px;width:calc(100vw - 36px);max-width:calc(100vw - 36px);font-size:clamp(51px,15.5vw,64px);line-height:.8}
+  .eyebrow{margin-top:235px}
+  .hero-intro{max-width:100%}
+  .hero-object{top:335px;right:0;width:100vw;height:700px;transform:translateY(calc(var(--scroll-y)*-.07px))}
+  .hero-phone{left:50%;top:76px;width:228px;height:466px;transform:translateX(-50%) perspective(900px) rotateY(-12deg) rotateZ(5deg)}
+  .hero-phone-screen{padding:27px 16px}
+  .hero-phone-screen h3{font-size:25px;margin-bottom:25px}
+  .hp-top{margin-bottom:32px}
+  .hp-balance{padding:18px}
+  .hp-balance strong{font-size:23px}
+  .hp-grid i{height:61px}
+  .object-ring{left:50%;top:43%}
+  .ring-one{width:440px;height:440px}
+  .ring-two{width:330px;height:330px}
+  .ring-three{width:230px;height:230px}
+  .card-live{right:18px;bottom:32px;width:132px;padding:16px;border-radius:20px}
+  .hero-bottom{bottom:17px}
+  .floating-dock{height:58px;grid-template-columns:50px 1fr 122px}
+  .floating-dock>a:last-child{height:46px}
+  .signal-copy h2{font-size:clamp(50px,14.8vw,61px)}
+  .signal-orb{width:74vw;height:74vw;right:-18vw;bottom:105px}
+  .story-stage{height:680px}
+  .device-wrap{transform:scale(.6);margin-left:28vw}
+  .story-copy{padding:70px 18px}
+  .story-copy article{min-height:530px}
+  .story-copy h3{font-size:41px}
+  .product-lab,.how,.proof-section,.faq{padding-top:76px;padding-bottom:76px}
+  .lab-head h2,.how-title h2,.faq-title h2{font-size:49px}
+  .lab-card{min-height:390px;padding:28px 20px}
+  .lab-symbol{font-size:132px}
+  .lab-card h3{font-size:42px}
+  .steps article{min-height:250px}
+  .proof-copy h2{font-size:42px}
+  .stats strong{font-size:61px}
+  .download{min-height:820px;padding-top:86px;padding-bottom:86px}
+  .download-copy h2{font-size:51px}
+}
