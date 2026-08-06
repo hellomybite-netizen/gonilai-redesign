@@ -11,7 +11,7 @@ const content = {
     headlineA: "Satu aplikasi.", headlineB: "Pelbagai peluang.",
     intro: "Jadikan telefon anda sebuah kedai digital. Jual reload, bayar bil dan tawarkan voucher kepada pelanggan—bila-bila masa, di mana sahaja.",
     start: "Mula percuma", explore: "Masuk pengalaman", scroll: "GULIR UNTUK TEROKAI",
-    signal: "Perniagaan bukan statik.", signalAccent: "Ia sentiasa bergerak.", signalBody: "Setiap reload, setiap bil dan setiap pelanggan menggerakkan kedai anda ke hadapan.",
+    signal: "Top up mobile numbers", signalAccent: "in 10 countries", signalBody: "Tambah nilai nombor antarabangsa dengan mudah—pilih negara, masukkan nombor dan selesaikan transaksi dalam beberapa langkah.",
     trust: ["Tiada yuran pendaftaran", "Transaksi masa nyata", "Dibina untuk Malaysia"],
     marquee: ["RELOAD", "BAYARAN BIL", "E-WALLET", "VOUCHER DIGITAL", "DATA"],
     storyKicker: "SATU KEDAI DALAM POKET ANDA", storyTitle: "Semua yang anda perlukan untuk berniaga.",
@@ -44,7 +44,7 @@ const content = {
     headlineA: "One app.", headlineB: "Many opportunities.",
     intro: "Turn your phone into a digital store. Sell reloads, pay bills and offer vouchers to customers—anytime, anywhere.",
     start: "Start for free", explore: "Enter the experience", scroll: "SCROLL TO EXPLORE",
-    signal: "Business is not static.", signalAccent: "It is always moving.", signalBody: "Every reload, every bill and every customer moves your store forward.",
+    signal: "Top up mobile numbers", signalAccent: "in 10 countries", signalBody: "Top up international numbers with ease—choose a country, enter the number and complete the transaction in just a few steps.",
     trust: ["No registration fees", "Real-time transactions", "Built for Malaysia"],
     marquee: ["RELOAD", "BILL PAYMENT", "E-WALLET", "DIGITAL VOUCHERS", "DATA"],
     storyKicker: "A STORE IN YOUR POCKET", storyTitle: "Everything you need to do business.",
@@ -72,6 +72,19 @@ const content = {
     download: "Download on", footer: "Your digital business partner for reloads, bills and vouchers.", rights: "All rights reserved.", caveat: "Figures are based on the current myKedai site; verify before production release.",
   },
 };
+
+const countries = [
+  { flag: "🇲🇾", name: "Malaysia" },
+  { flag: "🇮🇩", name: "Indonesia" },
+  { flag: "🇧🇩", name: "Bangladesh" },
+  { flag: "🇲🇲", name: "Myanmar" },
+  { flag: "🇵🇭", name: "Philippines" },
+  { flag: "🇻🇳", name: "Vietnam" },
+  { flag: "🇮🇳", name: "India" },
+  { flag: "🇨🇳", name: "China" },
+  { flag: "🇵🇰", name: "Pakistan" },
+  { flag: "🇳🇵", name: "Nepal" },
+] as const;
 
 function Phone({ active, labels }: { active: number; labels: string[] }) {
   return <div className="device-wrap" aria-live="polite">
@@ -208,10 +221,11 @@ export default function Home() {
 
     <section className="signal-section">
       <div className="signal-noise" />
-      <p className="signal-index">01—MOTION / GERAKAN</p>
+      <p className="signal-index">10 COUNTRIES / INTERNATIONAL RELOAD</p>
       <div className="signal-copy reveal"><h2>{t.signal}<br/><em>{t.signalAccent}</em></h2><p>{t.signalBody}</p></div>
-      <div className="signal-orb" aria-hidden="true"><div/><span>K</span></div>
-      <div className="signal-readout"><span>LIVE</span><b>∞</b><small>TRANSACTIONS<br/>IN MOTION</small></div>
+      <div className="country-grid reveal" aria-label="Countries supported for international mobile top up">
+        {countries.map((country, index) => <div className="country-card" key={country.name}><span aria-hidden="true">{country.flag}</span><small>0{index + 1}</small><b>{country.name}</b></div>)}
+      </div>
     </section>
 
     <section className="story" id="story">
