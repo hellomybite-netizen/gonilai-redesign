@@ -78,14 +78,8 @@ function Phone({ active, labels }: { active: number; labels: string[] }) {
     <div className="device-glow" />
     <div className="device">
       <div className="device-notch" />
-      <div className="device-screen">
-        <div className="app-header"><span className="mini-logo">K</span><b>myKedai</b><i>•••</i></div>
-        <div className="screen-label"><span>0{active + 1}</span>{labels[active]}</div>
-        {active === 0 && <div className="screen-scene wallet-scene"><small>AVAILABLE BALANCE</small><strong>RM 478.15</strong><button>+ TOP UP</button><div className="wave" /></div>}
-        {active === 1 && <div className="screen-scene product-scene">{["↗", "▦", "◉", "✦", "#", "+"].map((x, i) => <div key={i}><span>{x}</span><small>{["Reload", "Bills", "Wallet", "Voucher", "Data", "More"][i]}</small></div>)}</div>}
-        {active === 2 && <div className="screen-scene receipt-scene"><div className="success">✓</div><b>TRANSACTION SUCCESSFUL</b><strong>RM 30.00</strong><p>Reload Mobile · 6012 345 6789</p><button>SHARE RECEIPT</button></div>}
-        {active === 3 && <div className="screen-scene points-scene"><span>MY POINTS</span><strong>2,480</strong><div className="coin">K</div><button>REDEEM POINTS</button></div>}
-        <div className="app-tabs"><span>⌂</span><span>◫</span><span>◎</span><span>◌</span></div>
+      <div className="device-screen is-screenshot">
+        <img className="app-screenshot" src="/mykedai-app-anna.png" alt={`Paparan aplikasi myKedai — ${labels[active]}`} />
       </div>
     </div>
   </div>;
@@ -200,12 +194,8 @@ export default function Home() {
       <div className="hero-object" aria-hidden="true">
         <div className="object-ring ring-one"/><div className="object-ring ring-two"/><div className="object-ring ring-three"/>
         <div className="hero-phone">
-          <div className="hero-phone-screen">
-            <div className="hp-top"><span>09:41</span><b>● ● ●</b></div>
-            <small>{lang === "ms" ? "Selamat kembali" : "Welcome back"}</small>
-            <h3>{lang === "ms" ? "Kedai anda\nsedia bergerak?" : "Ready to move\nyour business?"}</h3>
-            <div className="hp-balance"><span>{lang === "ms" ? "Baki tersedia" : "Available balance"}</span><strong>RM 478.15</strong></div>
-            <div className="hp-grid"><i>↗<small>Reload</small></i><i>▦<small>Bills</small></i><i>◉<small>Wallet</small></i><i>✦<small>Voucher</small></i></div>
+          <div className="hero-phone-screen is-screenshot">
+            <img className="app-screenshot" src="/mykedai-app-anna.png" alt="Paparan aplikasi myKedai untuk Anna" />
           </div>
         </div>
         <div className="hero-float-card card-store"><small>{lang === "ms" ? "Semua dalam satu aplikasi" : "Everything in one app"}</small><b>Reload · Bills · Voucher</b></div>
