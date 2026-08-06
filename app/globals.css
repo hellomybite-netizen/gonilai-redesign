@@ -259,7 +259,7 @@ html,body,main{background:#fff9f7;color:var(--ink)}
 .hero-bottom{color:#735f65}
 
 .hero-phone-screen.is-screenshot,.device-screen.is-screenshot{padding:0;background:#fff;overflow:hidden}
-.app-screenshot{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
+.app-screenshot{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:#fff}
 .device-glow{background:radial-gradient(circle,rgba(255,68,93,.28),rgba(148,111,255,.18) 46%,transparent 70%)}
 
 .marquee{background:#ffffff;color:#3a1f25;border-color:#ead7db}
