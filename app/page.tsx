@@ -214,8 +214,6 @@ export default function Home() {
       <div className="hero-bottom"><p>{t.trust.map(x => <span key={x}>✓ {x}</span>)}</p><a href="#story">{t.scroll}<i>↓</i></a></div>
     </section>
 
-    <div className="floating-dock"><a href="#top" aria-label="Home">☰</a><span>K</span><a href="#download">{lang === "ms" ? "Muat turun" : "Download"}</a></div>
-
     <div className="marquee" aria-hidden="true"><div>{[...t.marquee, ...t.marquee].map((x, i) => <span key={i}>{x}<i>✦</i></span>)}</div></div>
 
     <section className="signal-section">
