@@ -1,267 +1,299 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
-type Lang = "ms" | "en";
-
-const content = {
-  ms: {
-    nav: ["Produk", "Cara ia berfungsi", "Kelebihan", "Bantuan"],
-    eyebrow: "Perniagaan digital, dipermudah",
-    headlineA: "Satu aplikasi.", headlineB: "Pelbagai peluang.",
-    intro: "Jadikan telefon anda sebuah kedai digital. Jual reload, bayar bil dan tawarkan voucher kepada pelanggan—bila-bila masa, di mana sahaja.",
-    start: "Mula percuma", explore: "Masuk pengalaman", scroll: "GULIR UNTUK TEROKAI",
-    signal: "Top up mobile numbers", signalAccent: "in 10 countries", signalBody: "Tambah nilai nombor antarabangsa dengan mudah—pilih negara, masukkan nombor dan selesaikan transaksi dalam beberapa langkah.",
-    trust: ["Tiada yuran pendaftaran", "Transaksi masa nyata", "Dibina untuk Malaysia"],
-    marquee: ["RELOAD", "BAYARAN BIL", "E-WALLET", "VOUCHER DIGITAL", "DATA"],
-    storyKicker: "SATU KEDAI DALAM POKET ANDA", storyTitle: "Semua yang anda perlukan untuk berniaga.",
-    features: [
-      { n: "01", title: "Tambah nilai tanpa menunggu.", body: "Isi wallet melalui FPX, JomPAY atau pindahan bank, kemudian teruskan perniagaan anda." },
-      { n: "02", title: "Jual produk yang pelanggan mahu.", body: "Akses reload tempatan dan antarabangsa, bil, e-wallet, data dan voucher dari satu tempat." },
-      { n: "03", title: "Setiap transaksi, lebih jelas.", body: "Semak sejarah, status dan resit. Kongsi bukti pembayaran terus kepada pelanggan." },
-      { n: "04", title: "Jual lebih, nikmati lebih.", body: "Kumpul mata myKedai daripada transaksi dan tebus ganjaran untuk meningkatkan keuntungan." },
-    ],
-    stageLabels: ["Baki wallet", "Produk popular", "Resit digital", "Mata myKedai"],
-    productKicker: "PELUANG TANPA SEMPADAN", productTitle: "Apa yang boleh anda jual hari ini?", productBody: "Pilih kategori untuk melihat bagaimana satu aplikasi membuka lebih banyak peluang pendapatan.",
-    products: [
-      { icon: "↗", name: "Reload", sub: "10 negara", desc: "Tambah nilai nombor tempatan dan antarabangsa dengan pantas." },
-      { icon: "▦", name: "Bayaran bil", sub: "Setiap hari", desc: "Bantu pelanggan menyelesaikan bil penting dari satu aplikasi." },
-      { icon: "◉", name: "E-Wallet", sub: "Mudah", desc: "Tambah nilai dompet digital popular tanpa proses yang rumit." },
-      { icon: "✦", name: "Voucher", sub: "Lebih pilihan", desc: "Tawarkan voucher shopping, gaming dan gaya hidup digital." },
-    ],
-    howKicker: "BENEFIT / KELEBIHAN", howTitle: "6 Benefits of using myKedai!",
-    steps: [["01", "Tiada yuran pendaftaran", "Daftar secara percuma dalam masa kurang daripada seminit."], ["02", "Pelbagai cara tambah nilai", "Isi wallet dengan mudah melalui kaedah pembayaran pilihan anda."], ["03", "Cepat, masa nyata & telus", "Beli dengan pantas dan semak sejarah transaksi anda dengan mudah."], ["04", "Kongsi resit", "Kongsi resit melalui e-mel, WhatsApp, Bluetooth dan saluran lain."], ["05", "Harga kompetitif", "Jana keuntungan sehingga 10% melalui transaksi myKedai."], ["06", "Kumpul & tebus mata", "Dapatkan mata daripada setiap transaksi dan tebus untuk lebih keuntungan."]],
-    proofLead: "Kedai kecil. Cita-cita besar.", proofBody: "myKedai memberi peniaga alat digital yang ringkas untuk menjana pendapatan di mana sahaja mereka berada.",
-    stats: [["104k+", "muat turun"], ["10", "negara"], ["RM3.9M", "nilai transaksi"]],
-    faqKicker: "BANTUAN", faqTitle: "Perkara yang sering ditanya.",
-    faqs: [["Adakah pendaftaran percuma?", "Ya. Tiada yuran pendaftaran untuk membuka akaun myKedai."], ["Bagaimana saya menambah nilai wallet?", "Gunakan FPX, JomPAY atau pindahan bank. Ketersediaan kaedah mungkin bergantung pada jumlah."], ["Mengapa KYC diperlukan?", "KYC membantu mengesahkan identiti serta melindungi akaun dan dana daripada penyalahgunaan."], ["Apakah perbezaan pengguna BASIC dan ADVANCE?", "BASIC mempunyai had transaksi harian, manakala ADVANCE membuka akses transaksi yang lebih tinggi selepas pengesahan tambahan."]],
-    ctaKicker: "KEDAI ANDA SEDIA DIBUKA", ctaTitle: "Mulakan dari telefon yang sudah ada di tangan anda.", ctaBody: "Muat turun myKedai. Daftar percuma. Bina pendapatan anda sendiri.",
-    download: "Muat turun di", footer: "Rakan perniagaan digital anda untuk reload, bil dan voucher.", rights: "Hak cipta terpelihara.", caveat: "Angka berdasarkan laman myKedai semasa; sahkan sebelum penerbitan.",
+const steps = [
+  {
+    number: "01",
+    title: "Ketik gonilai.app",
+    body: "Kamu bisa gunakan browser seperti Chrome, Opera, Mozilla, atau yang lainnya untuk akses gonilai.app.",
   },
-  en: {
-    nav: ["Products", "How it works", "Benefits", "Help"],
-    eyebrow: "Digital business, made simple",
-    headlineA: "One app.", headlineB: "Many opportunities.",
-    intro: "Turn your phone into a digital store. Sell reloads, pay bills and offer vouchers to customers—anytime, anywhere.",
-    start: "Start for free", explore: "Enter the experience", scroll: "SCROLL TO EXPLORE",
-    signal: "Top up mobile numbers", signalAccent: "in 10 countries", signalBody: "Top up international numbers with ease—choose a country, enter the number and complete the transaction in just a few steps.",
-    trust: ["No registration fees", "Real-time transactions", "Built for Malaysia"],
-    marquee: ["RELOAD", "BILL PAYMENT", "E-WALLET", "DIGITAL VOUCHERS", "DATA"],
-    storyKicker: "A STORE IN YOUR POCKET", storyTitle: "Everything you need to do business.",
-    features: [
-      { n: "01", title: "Top up without the wait.", body: "Fund your wallet through FPX, JomPAY or bank transfer, then get straight back to business." },
-      { n: "02", title: "Sell what customers want.", body: "Access local and international reloads, bills, e-wallets, data and vouchers in one place." },
-      { n: "03", title: "Every transaction, made clear.", body: "Review history, status and receipts. Share proof of payment directly with your customers." },
-      { n: "04", title: "Sell more, enjoy more.", body: "Collect myKedai points from transactions and redeem rewards to grow your earnings." },
-    ],
-    stageLabels: ["Wallet balance", "Popular products", "Digital receipt", "myKedai points"],
-    productKicker: "OPPORTUNITY WITHOUT BORDERS", productTitle: "What can you sell today?", productBody: "Choose a category to see how one app opens more ways to earn.",
-    products: [
-      { icon: "↗", name: "Reload", sub: "10 countries", desc: "Top up local and international numbers in moments." },
-      { icon: "▦", name: "Bill payment", sub: "Every day", desc: "Help customers settle essential bills from one app." },
-      { icon: "◉", name: "E-Wallet", sub: "Simple", desc: "Top up popular digital wallets without complicated steps." },
-      { icon: "✦", name: "Vouchers", sub: "More choice", desc: "Offer shopping, gaming and digital lifestyle vouchers." },
-    ],
-    howKicker: "BENEFIT", howTitle: "6 Benefits of using myKedai!",
-    steps: [["01", "No registration fees", "Register for free in less than a minute."], ["02", "Various ways to top up", "Fund your wallet easily using your preferred payment method."], ["03", "Fast, real-time & transparent", "Purchase quickly and review your transaction history with ease."], ["04", "Receipt sharing", "Share receipts through e-mail, WhatsApp, Bluetooth and other channels."], ["05", "Competitive pricing", "Earn profit of up to 10% through myKedai transactions."], ["06", "Get points & redeem", "Earn points with every transaction and redeem them for more profit."]],
-    proofLead: "Small store. Big ambition.", proofBody: "myKedai gives merchants simple digital tools to earn wherever they are.",
-    stats: [["104k+", "downloads"], ["10", "countries"], ["RM3.9M", "transaction value"]],
-    faqKicker: "HELP", faqTitle: "Things people often ask.",
-    faqs: [["Is registration free?", "Yes. There is no registration fee to open a myKedai account."], ["How do I fund my wallet?", "Use FPX, JomPAY or a bank transfer. Method availability may depend on the amount."], ["Why is KYC required?", "KYC helps verify identity and protects accounts and funds against misuse."], ["What is the difference between BASIC and ADVANCE?", "BASIC has a daily transaction limit, while ADVANCE enables higher transaction access after additional verification."]],
-    ctaKicker: "YOUR STORE IS READY TO OPEN", ctaTitle: "Start with the phone already in your hand.", ctaBody: "Download myKedai. Register free. Build an income of your own.",
-    download: "Download on", footer: "Your digital business partner for reloads, bills and vouchers.", rights: "All rights reserved.", caveat: "Figures are based on the current myKedai site; verify before production release.",
+  {
+    number: "02",
+    title: "Konfirmasi pembelian",
+    body: "Klik tombol “Memilih Produk” untuk memilih produk yang diinginkan. Pastikan semua informasi pembelian benar, khususnya nomor telepon.",
   },
-};
+  {
+    number: "03",
+    title: "Pembayaran",
+    body: "Sekarang kamu bisa melakukan pembayaran melalui 7-Eleven atau pembayaran online yang telah disediakan di gonilai.app.",
+  },
+];
 
-const countries = [
-  { flag: "🇲🇾", name: "Malaysia" },
-  { flag: "🇮🇩", name: "Indonesia" },
-  { flag: "🇧🇩", name: "Bangladesh" },
-  { flag: "🇲🇲", name: "Myanmar" },
-  { flag: "🇵🇭", name: "Philippines" },
-  { flag: "🇻🇳", name: "Vietnam" },
-  { flag: "🇮🇳", name: "India" },
-  { flag: "🇨🇳", name: "China" },
-  { flag: "🇵🇰", name: "Pakistan" },
-  { flag: "🇳🇵", name: "Nepal" },
-] as const;
+const products = [
+  { number: "01", title: "Isi Pulsa", body: "Isi ulang pulsa makin mudah dan hemat dengan GoNilai.", mark: "↗" },
+  { number: "02", title: "Paket Data", body: "Beli paket data untuk keluarga atau sahabat agar selalu terkoneksi.", mark: "⌁" },
+  { number: "03", title: "Token PLN", body: "Pastikan listrik selalu nyala di rumah dengan isi ulang token PLN tepat waktu.", mark: "ϟ" },
+  { number: "04", title: "Voucher", body: "Belanja kebutuhan harian dari Indomaret, Alfamart, Carrefour, dan pilihan lainnya.", mark: "✦" },
+];
 
-function Phone({ active, labels }: { active: number; labels: string[] }) {
-  return <div className="device-wrap" aria-live="polite">
-    <div className="device-glow" />
-    <div className="device">
-      <div className="device-notch" />
-      <div className="device-screen is-screenshot">
-        <img className="app-screenshot" src="/mykedai-app-anna.png" alt={`Paparan aplikasi myKedai — ${labels[active]}`} />
-      </div>
-    </div>
-  </div>;
-}
+const testimonials = [
+  { quote: "Gonilai panceng OK MURAH SENANG GUNANYA MARI RAMAI2 GUNA GONILAI YG LAIN LEWAT", name: "Morsyid Morsyid", image: "/gonilai/morsyid.png" },
+  { quote: "Trima kasih GONILAI sudah membantu saya ...beli pulsa PLN bisa dri malaysia", name: "momz keisha", image: "/gonilai/momz.png" },
+  { quote: "Gonilai terbaek.hadiahnya ori gonila terbest💓💓💓", name: "Li samah", image: "/gonilai/li-samah.png" },
+  { quote: "ya senang je sy pun dah guna Gonilai kira semenit je dah terus masuk", name: "Maria Borneo", image: "/gonilai/maria.png" },
+  { quote: "pakai GoNilai emang mantap", name: "Awie Ansyah", image: "/gonilai/awie.png" },
+  { quote: "senang gak usah susah2 isi sama GoNilai saja", name: "Tira Rahem", image: "/gonilai/tira.png" },
+  { quote: "Alhamdulillah saya dh guna Gonilai memang baik lh buat saya. Senang mau bayar listerik atau pon isi pulsa", name: "Irma", image: "/gonilai/irma.png" },
+];
 
-function StoreButton({ store, label }: { store: string; label: string }) {
-  const href = store === "Google Play" ? "https://play.google.com/store/apps/details?id=hash.myriatek.telinmy.dealer" : "https://apps.apple.com/id/app/mykedai/id1396978009";
-  return <a className="store-button" href={href} target="_blank" rel="noreferrer"><span>{store === "Google Play" ? "▶" : "●"}</span><small>{label}<b>{store}</b></small></a>;
-}
+const news = [
+  {
+    label: "PROMO",
+    title: "GONILAI BIKIN MAKIN DEKAT DENGAN KELUARGA DI BULAN RAMADHAN",
+    body: "Siapa pun yang isi ulang di GoNilai bisa tetap dekat dengan keluarga di momen yang istimewa.",
+    href: "https://home.gonilai.my/promo-ramadhan/",
+  },
+  {
+    label: "CERITA GONILAI",
+    title: "Mudah pesannya, murah bayarnya, meriah hadiahnya dengan GoNilai",
+    body: "Kenalan dengan layanan isi ulang di Malaysia yang memudahkanmu mengirim kebutuhan digital.",
+    href: "https://home.gonilai.my/mudah-pesannya-murah-bayarnya-meriah-hadiahnya-dengan-gonilai/",
+  },
+  {
+    label: "TIPS",
+    title: "Kirim pulsa dan token PLN ke Indonesia lebih mudah dengan GoNilai",
+    body: "Tetap terkoneksi dengan keluarga dan bantu kebutuhan rumah dari Malaysia.",
+    href: "https://home.gonilai.my/kirim-pulsa-dan-token-pln-ke-indonesia-lebih-mudah-dengan-gonilai/",
+  },
+];
 
-function KineticCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const context = canvas.getContext("2d");
-    if (!context) return;
-    let frame = 0;
-    let animation = 0;
-    let pointerX = .65;
-    let pointerY = .45;
-    const resize = () => {
-      const ratio = Math.min(devicePixelRatio, 2);
-      canvas.width = innerWidth * ratio;
-      canvas.height = innerHeight * ratio;
-      canvas.style.width = innerWidth + "px";
-      canvas.style.height = innerHeight + "px";
-      context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    };
-    const move = (event: PointerEvent) => { pointerX = event.clientX / innerWidth; pointerY = event.clientY / innerHeight; };
-    const draw = () => {
-      const width = innerWidth;
-      const height = innerHeight;
-      context.clearRect(0, 0, width, height);
-      context.globalCompositeOperation = "lighter";
-      for (let ribbon = 0; ribbon < 7; ribbon++) {
-        const phase = frame * .008 + ribbon * .62;
-        const startY = height * (.23 + ribbon * .075);
-        context.beginPath();
-        context.moveTo(-80, startY + Math.sin(phase) * 35);
-        for (let x = -80; x <= width + 80; x += 38) {
-          const normalized = x / width;
-          const pull = Math.exp(-Math.pow(normalized - pointerX, 2) * 8) * (pointerY - .5) * 220;
-          const y = startY + Math.sin(normalized * 7 + phase) * (60 + ribbon * 4) + pull;
-          context.lineTo(x, y);
-        }
-        const gradient = context.createLinearGradient(0, 0, width, 0);
-        gradient.addColorStop(0, "rgba(237,48,40,0)");
-        gradient.addColorStop(.35, "rgba(237,48,40,.18)");
-        gradient.addColorStop(.62, ribbon % 2 ? "rgba(255,180,74,.75)" : "rgba(255,62,42,.72)");
-        gradient.addColorStop(1, "rgba(111,70,255,0)");
-        context.strokeStyle = gradient;
-        context.lineWidth = ribbon === 3 ? 2.2 : .7;
-        context.shadowColor = ribbon % 2 ? "#ffb14a" : "#ed3028";
-        context.shadowBlur = ribbon === 3 ? 26 : 10;
-        context.stroke();
-      }
-      context.globalCompositeOperation = "source-over";
-      frame++;
-      animation = requestAnimationFrame(draw);
-    };
-    resize(); draw();
-    window.addEventListener("resize", resize); window.addEventListener("pointermove", move);
-    return () => { cancelAnimationFrame(animation); window.removeEventListener("resize", resize); window.removeEventListener("pointermove", move); };
-  }, []);
-  return <canvas className="kinetic-canvas" ref={canvasRef} aria-hidden="true" />;
-}
+const policies = [
+  {
+    number: "01",
+    title: "Kebijakan Refund",
+    body: "Transaksi yang sudah dilakukan bersifat final dan tidak dapat dibatalkan. Jika terjadi kesalahan memasukkan nomer penerima tetapi berstatus sukses, transaksi tidak dapat dikembalikan. Transaksi berstatus gagal akan dikembalikan dalam bentuk GoNilai Credit. Nantinya pengguna GoNilai dapat melakukan transaksi baru dan melakukan pembayaran menggunakan GoNilai Credit.",
+  },
+  {
+    number: "02",
+    title: "Kebijakan Privasi",
+    body: "GONILAI mengoperasikan situs web https://home.gonilai.my. Halaman ini memberi tahu Anda tentang kebijakan kami terkait pengumpulan, penggunaan, dan pengungkapan data pribadi saat Anda menggunakan Layanan kami dan pilihan yang Anda kaitkan dengan data tersebut. Kami menggunakan data Anda untuk menyediakan dan meningkatkan Layanan.",
+    href: "https://home.gonilai.my/kebijakan-privasi/",
+  },
+  {
+    number: "03",
+    title: "Program Ajak Kawan",
+    body: "HARAP BACA KETENTUAN PROGRAM INI DENGAN SAKSAMA. Perjanjian ini menetapkan ketentuan yang mengatur program Ajak Kawan kami. Dengan menggunakan Program Ajak Kawan, Anda menegaskan bahwa Anda menerima Perjanjian ini dan setuju untuk mematuhinya.",
+    href: "https://home.gonilai.my/ketentuan-program-ajak-kawan/",
+  },
+  {
+    number: "04",
+    title: "Terms & Conditions",
+    body: "These Terms and Conditions constitute a legally binding agreement made between you and GoNilai concerning your access to and use of the home.gonilai.my website and related services. By accessing the Site, you agree to be bound by these Terms and Conditions of Use.",
+    href: "https://home.gonilai.my/terms-conditions/",
+  },
+];
+
+const faqs = [
+  ["Apakah GoNilai?", "GoNilai adalah sistem untuk pembelian produk yang disediakan melalui Facebook Messenger dan browser (website)."],
+  ["Bagaimana cara daftar GoNilai?", "Buka browser di HP dan ketik gonilai.app. Klik MASUK/DAFTAR, pilih Daftar Sekarang, isi nama dan nomer telepon, lalu masukkan nomer OTP yang dikirim ke nomer terdaftar dan klik SIMPAN."],
+  ["Bagaimana cara menggunakan GoNilai?", "Buka Messenger GoNilai dan tulis ‘hai’ atau kunjungi m.me/gonilai.my. Kamu juga dapat mengikuti video panduan yang tersedia di halaman GoNilai."],
+  ["Apakah perlu download?", "GoNilai tidak menggunakan aplikasi. Pemilihan produk dapat dilakukan melalui Facebook Messenger atau dengan mengetik gonilai.app di web browser—kami menyarankan Google Chrome."],
+  ["Transaksi saya gagal. Bagaimana saya mahu menukar nomor baru?", "Jika transaksi gagal, uang akan menjadi credit. Silakan membuat transaksi baru lalu pilih pembayaran Credit semasa pembayaran."],
+  ["Macam mana cara keluar barcode?", "Bisa langsung klik link https://gonilai.app/."],
+  ["PLN apa saja yang bisa dibayar di GoNilai?", "GoNilai hanya menyediakan PLN token saja. Untuk PLN bill belum tersedia untuk masa ini."],
+  ["Boleh buat penggadaian di GoNilai?", "GoNilai tidak menyediakan penggadaian."],
+  ["Apakah boleh kirim duit melalui GoNilai?", "GoNilai tidak menyediakan pengiriman duit."],
+  ["Apakah ada batas transaksi?", "Semua pembelian tidak memiliki batasan transaksi kecuali e-wallet. Transaksi e-wallet hanya diperbolehkan 3 kali dalam waktu 24 jam."],
+];
 
 export default function Home() {
-  const [lang, setLang] = useState<Lang>("ms");
-  const [activeFeature, setActiveFeature] = useState(0);
-  const [activeProduct, setActiveProduct] = useState(0);
-  const heroRef = useRef<HTMLElement>(null);
-  const t = content[lang];
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => {
-      document.documentElement.style.setProperty("--scroll-y", String(window.scrollY));
-      document.documentElement.style.setProperty("--progress", String(Math.min(1, window.scrollY / (document.body.scrollHeight - innerHeight))));
-    };
-    const reveal = new IntersectionObserver((entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("is-visible")), { threshold: .12 });
-    document.querySelectorAll(".reveal").forEach((el) => reveal.observe(el));
-    const featureObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) setActiveFeature(Number((entry.target as HTMLElement).dataset.feature)); }), { rootMargin: "-35% 0px -45% 0px", threshold: 0 });
-    document.querySelectorAll("[data-feature]").forEach((el) => featureObserver.observe(el));
-    window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
-    return () => { window.removeEventListener("scroll", onScroll); reveal.disconnect(); featureObserver.disconnect(); };
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("visible")),
+      { threshold: 0.12 },
+    );
+    document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
   }, []);
 
-  const moveHero = (event: React.PointerEvent<HTMLElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    event.currentTarget.style.setProperty("--mx", String((event.clientX - rect.left) / rect.width - .5));
-    event.currentTarget.style.setProperty("--my", String((event.clientY - rect.top) / rect.height - .5));
+  const moveTestimonial = (direction: number) => {
+    setActiveTestimonial((current) => (current + direction + testimonials.length) % testimonials.length);
   };
 
-  return <main>
-    <div className="progress-bar" />
-    <header className="site-header">
-      <a className="brand" href="#top"><img className="brand-logo" src="/mykedai-logo.png" alt="myKedai" /></a>
-      <nav>{t.nav.map((item, i) => <a key={item} href={["#products", "#story", "#how", "#faq"][i]}>{item}</a>)}</nav>
-      <div className="header-tools"><div className="lang-switch" aria-label="Language"><button className={lang === "ms" ? "active" : ""} onClick={() => setLang("ms")}>BM</button><button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>EN</button></div><a className="round-cta" href="#download">{t.start}<span>↗</span></a></div>
-    </header>
+  return (
+    <main>
+      <header className="site-header">
+        <a className="logo" href="#beranda" aria-label="GoNilai — Beranda">
+          <img src="/gonilai/logo.png" alt="GoNilai" />
+        </a>
+        <nav className={menuOpen ? "open" : ""} aria-label="Navigasi utama">
+          <a href="#produk" onClick={() => setMenuOpen(false)}>Produk</a>
+          <a href="#cara-beli" onClick={() => setMenuOpen(false)}>Cara Beli</a>
+          <a href="#tentang" onClick={() => setMenuOpen(false)}>Tentang</a>
+          <a href="#berita" onClick={() => setMenuOpen(false)}>Berita</a>
+          <a href="#faq" onClick={() => setMenuOpen(false)}>FAQ</a>
+        </nav>
+        <a className="header-cta" href="https://gonilai.app/" target="_blank" rel="noreferrer">Coba Sekarang <span>↗</span></a>
+        <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Buka navigasi">
+          <span /><span />
+        </button>
+      </header>
 
-    <section className="hero" id="top" ref={heroRef} onPointerMove={moveHero}>
-      <KineticCanvas />
-      <div className="hero-grid" aria-hidden="true" />
-      <div className="hero-copy reveal">
-        <p className="eyebrow"><span>●</span>{t.eyebrow}</p>
-        <h1><span>{t.headlineA}</span><em>{t.headlineB}</em></h1>
-        <p className="hero-intro">{t.intro}</p>
-        <div className="hero-actions"><a className="primary-btn" href="#download">{t.start}<span>↗</span></a><a className="text-btn" href="#story">{t.explore}<span>↓</span></a></div>
-      </div>
-      <div className="hero-object" aria-hidden="true">
-        <div className="object-ring ring-one"/><div className="object-ring ring-two"/><div className="object-ring ring-three"/>
-        <div className="hero-phone">
-          <div className="hero-phone-screen is-screenshot">
-            <img className="app-screenshot" src="/mykedai-app-anna.png" alt="Paparan aplikasi myKedai untuk Anna" />
+      <section className="hero section-pad" id="beranda">
+        <div className="hero-panel">
+          <div className="hero-grid" aria-hidden="true" />
+          <div className="hero-copy reveal">
+            <p className="eyebrow"><i /> PEMBAYARAN DIGITAL UNTUK SEMUA</p>
+            <h1>Pembayaran online makin <em>mudah</em> dan <em>murah.</em></h1>
+            <p className="hero-body">Kirim pulsa, paket data, voucher, dan token PLN untuk orang tersayang—langsung dari Malaysia.</p>
+            <div className="hero-actions">
+              <a className="primary-button" href="https://gonilai.app/" target="_blank" rel="noreferrer">Mulai di GoNilai <span>↗</span></a>
+              <a className="secondary-button" href="#cara-beli">Lihat cara beli <span>↓</span></a>
+            </div>
+          </div>
+          <div className="hero-visual reveal">
+            <div className="orbit orbit-one" />
+            <div className="orbit orbit-two" />
+            <div className="phone-glow" />
+            <img className="app-mockup" src="/gonilai/app-mockup.webp" alt="Mockup layanan GoNilai di ponsel" />
+            <div className="float-card float-seven"><b>7-Eleven</b><span>Bayar tunai di seluruh Malaysia</span></div>
+            <div className="float-card float-fast"><span>TRANSAKSI</span><b>Praktis</b><small>Murah · Mudah · Meriah</small></div>
+          </div>
+          <div className="hero-trust">
+            <span>✓ Tanpa download aplikasi</span>
+            <span>✓ Bayar online atau tunai</span>
+            <span>✓ Untuk keluarga di Indonesia</span>
           </div>
         </div>
-        <div className="hero-float-card card-store"><small>{lang === "ms" ? "Semua dalam satu aplikasi" : "Everything in one app"}</small><b>Reload · Bills · Voucher</b></div>
-        <div className="hero-float-card card-live"><span>● LIVE</span><strong>104k+</strong><small>{lang === "ms" ? "muat turun" : "downloads"}</small></div>
+      </section>
+
+      <div className="ticker" aria-hidden="true">
+        <div>{["ISI PULSA", "PAKET DATA", "TOKEN PLN", "VOUCHER BELANJA", "ISI ULANG ANTARNEGARA", "ISI PULSA", "PAKET DATA", "TOKEN PLN"].map((item, index) => <span key={index}>{item}<i>✦</i></span>)}</div>
       </div>
-      <div className="hero-bottom"><p>{t.trust.map(x => <span key={x}>✓ {x}</span>)}</p><a href="#story">{t.scroll}<i>↓</i></a></div>
-    </section>
 
-    <div className="marquee" aria-hidden="true"><div>{[...t.marquee, ...t.marquee].map((x, i) => <span key={i}>{x}<i>✦</i></span>)}</div></div>
+      <section className="how section-pad" id="cara-beli">
+        <div className="section-heading reveal">
+          <p className="kicker">CARA MEMBELI DI GONILAI</p>
+          <h2>Tiga langkah.<br /><em>Langsung beres.</em></h2>
+          <p>Yuk simak 3 langkah mudah untuk bertransaksi di GoNilai.</p>
+        </div>
+        <div className="step-grid">
+          {steps.map((step) => (
+            <article className="step-card reveal" key={step.number}>
+              <span>{step.number}</span>
+              <div className="step-icon">{step.number === "01" ? "⌕" : step.number === "02" ? "✓" : "RM"}</div>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
-    <section className="signal-section">
-      <div className="signal-noise" />
-      <p className="signal-index">10 COUNTRIES / INTERNATIONAL RELOAD</p>
-      <div className="signal-copy reveal"><h2>{t.signal}<br/><em>{t.signalAccent}</em></h2><p>{t.signalBody}</p></div>
-      <div className="country-grid reveal" aria-label="Countries supported for international mobile top up">
-        {countries.map((country, index) => <div className="country-card" key={country.name}><span aria-hidden="true">{country.flag}</span><small>0{index + 1}</small><b>{country.name}</b></div>)}
-      </div>
-    </section>
+      <section className="about section-pad" id="tentang">
+        <div className="about-panel">
+          <div className="about-intro reveal">
+            <p className="kicker light">TENTANG GONILAI</p>
+            <h2>Dekat dengan keluarga, <em>meski beda negara.</em></h2>
+          </div>
+          <div className="about-body reveal">
+            <p>GoNilai adalah layanan pembelian pulsa dan voucher elektrik paling menguntungkan buat Anda yang tinggal di Malaysia dan sayang sama keluarga Anda di Indonesia.</p>
+            <p>Banyak sekali produk yang bisa dibeli di GoNilai, mulai dari isi pulsa, paket internet, voucher belanja (Indomaret, Alfamart, Carrefour), token PLN, sampai produk isi ulang berbagai negara seperti Malaysia, Bangladesh, Nepal, Myanmar, dan Philippines.</p>
+            <p>Bagi kamu yang mengandalkan pembayaran secara tunai, GoNilai memberikan solusi dengan pembayaran di toko 7-Eleven terdekat di seluruh Malaysia. Cukup tunjukkan barcode pembayaran, produk akan segera dikirimkan ke nomor tujuan.</p>
+          </div>
+          <div className="about-slogan"><span>MURAH</span><i>·</i><span>MUDAH</span><i>·</i><span>MERIAH</span></div>
+        </div>
+      </section>
 
-    <section className="story" id="story">
-      <div className="story-stage"><div className="story-heading"><p>{t.storyKicker}</p><h2>{t.storyTitle}</h2></div><Phone active={activeFeature} labels={t.stageLabels}/><div className="story-index"><b>0{activeFeature + 1}</b><span>/04</span></div></div>
-      <div className="story-copy">{t.features.map((feature, i) => <article data-feature={i} key={feature.n}><span>{feature.n}</span><h3>{feature.title}</h3><p>{feature.body}</p></article>)}</div>
-    </section>
+      <section className="products section-pad" id="produk">
+        <div className="section-heading product-heading reveal">
+          <p className="kicker">LIST PRODUK</p>
+          <h2>Satu tujuan.<br /><em>Banyak kebutuhan.</em></h2>
+          <p>Pilih kebutuhanmu dan kirim manfaatnya langsung kepada keluarga atau sahabat.</p>
+        </div>
+        <div className="product-grid">
+          {products.map((product, index) => (
+            <article className={`product-card reveal ${index === 0 ? "featured" : ""}`} key={product.title}>
+              <span>{product.number}</span>
+              <div className="product-mark">{product.mark}</div>
+              <h3>{product.title}</h3>
+              <p>{product.body}</p>
+              <a href="https://gonilai.app/" target="_blank" rel="noreferrer" aria-label={`Beli ${product.title}`}>Pilih produk <b>↗</b></a>
+            </article>
+          ))}
+        </div>
+      </section>
 
-    <section className="product-lab" id="products">
-      <div className="lab-head reveal"><p>{t.productKicker}</p><h2>{t.productTitle}</h2><span>{t.productBody}</span></div>
-      <div className="lab-window reveal">
-        <div className="lab-menu">{t.products.map((product, i) => <button key={product.name} className={activeProduct === i ? "active" : ""} onClick={() => setActiveProduct(i)}><span>0{i+1}</span>{product.name}</button>)}</div>
-        <div className="lab-card"><div className="lab-symbol">{t.products[activeProduct].icon}</div><div><small>{t.products[activeProduct].sub}</small><h3>{t.products[activeProduct].name}</h3><p>{t.products[activeProduct].desc}</p></div><span className="lab-arrow">↗</span></div>
-      </div>
-    </section>
+      <section className="seven section-pad" id="711">
+        <div className="seven-panel reveal">
+          <div className="seven-copy">
+            <p className="kicker">BAYAR TUNAI DI 7-ELEVEN</p>
+            <h2>Tak punya rekening? <em>Tetap bisa.</em></h2>
+            <p>Pilih pembayaran 7-Eleven di GoNilai, tunjukkan barcode di kasir toko terdekat di seluruh Malaysia, lalu produk akan segera dikirimkan ke nomor tujuan.</p>
+            <a className="dark-button" href="https://gonilai.app/" target="_blank" rel="noreferrer">Buat barcode <span>↗</span></a>
+          </div>
+          <div className="seven-visual" aria-hidden="true">
+            <div className="barcode"><span>GONILAI</span><div>{Array.from({ length: 31 }, (_, i) => <i key={i} style={{ width: i % 4 === 0 ? 5 : i % 3 === 0 ? 3 : 2 }} />)}</div><b>7 1103 0061 450</b></div>
+            <div className="seven-badge">7<span>ELEVEN</span></div>
+          </div>
+        </div>
+      </section>
 
-    <section className="how" id="how">
-      <div className="how-title reveal"><p>{t.howKicker}</p><h2>{t.howTitle}</h2></div>
-      <div className="steps">{t.steps.map((step, i) => <article className="reveal" style={{transitionDelay: i * 80 + "ms"}} key={step[0]}><span>{step[0]}</span><div className="step-dot">{i + 1}</div><h3>{step[1]}</h3><p>{step[2]}</p></article>)}</div>
-    </section>
+      <section className="testimonials section-pad">
+        <div className="testimonial-head reveal">
+          <div><p className="kicker light">APA YANG MEREKA KATAKAN</p><h2>Dipakai. Disukai.<br /><em>Diceritakan.</em></h2></div>
+          <div className="slider-buttons"><button onClick={() => moveTestimonial(-1)} aria-label="Testimoni sebelumnya">←</button><button onClick={() => moveTestimonial(1)} aria-label="Testimoni berikutnya">→</button></div>
+        </div>
+        <div className="testimonial-stage reveal">
+          <blockquote key={activeTestimonial}>
+            <span>“</span>
+            <p>{testimonials[activeTestimonial].quote}</p>
+            <footer><img src={testimonials[activeTestimonial].image} alt={testimonials[activeTestimonial].name} /><div><b>{testimonials[activeTestimonial].name}</b><small>Pengguna GoNilai</small></div></footer>
+          </blockquote>
+          <div className="testimonial-index"><b>0{activeTestimonial + 1}</b><span>/ 0{testimonials.length}</span></div>
+        </div>
+      </section>
 
-    <section className="proof-section">
-      <div className="proof-copy reveal"><p>{t.proofLead}</p><h2>{t.proofBody}</h2></div>
-      <div className="stats">{t.stats.map((stat, i) => <div key={stat[0]}><span>0{i+1}</span><strong>{stat[0]}</strong><p>{stat[1]}</p></div>)}</div><small>{t.caveat}</small>
-    </section>
+      <section className="news section-pad" id="berita">
+        <div className="section-heading reveal"><p className="kicker">BLOG DAN BERITA</p><h2>Kabar terkini<br /><em>dari GoNilai.</em></h2></div>
+        <div className="news-grid">
+          {news.map((item, index) => <a className="news-card reveal" href={item.href} target="_blank" rel="noreferrer" key={item.title}>
+            <div className={`news-art art-${index + 1}`}><span>{item.label}</span><b>{index === 0 ? "RAMADHAN" : index === 1 ? "GO!" : "⚡"}</b></div>
+            <small>{item.label}</small><h3>{item.title}</h3><p>{item.body}</p><i>Baca berita ↗</i>
+          </a>)}
+        </div>
+      </section>
 
-    <section className="faq" id="faq">
-      <div className="faq-title reveal"><p>{t.faqKicker}</p><h2>{t.faqTitle}</h2></div>
-      <div className="faq-list">{t.faqs.map((item, i) => <details className="reveal" key={item[0]}><summary><span>0{i+1}</span>{item[0]}<i>+</i></summary><p>{item[1]}</p></details>)}</div>
-    </section>
+      <section className="policies section-pad" id="kebijakan">
+        <div className="policy-heading reveal"><p className="kicker">KEBIJAKAN GONILAI</p><h2>Jelas sejak awal.</h2><p>Informasi penting untuk transaksi dan penggunaan layanan GoNilai.</p></div>
+        <div className="policy-list">
+          {policies.map((policy) => <details className="policy-item reveal" key={policy.title}>
+            <summary><span>{policy.number}</span><h3>{policy.title}</h3><i>+</i></summary>
+            <div><p>{policy.body}</p>{policy.href && <a href={policy.href} target="_blank" rel="noreferrer">Selengkapnya ↗</a>}</div>
+          </details>)}
+        </div>
+      </section>
 
-    <section className="download" id="download">
-      <div className="download-rings" /><div className="download-copy reveal"><p>{t.ctaKicker}</p><h2>{t.ctaTitle}</h2><span>{t.ctaBody}</span><div><StoreButton store="Google Play" label={t.download}/><StoreButton store="App Store" label={t.download}/></div></div>
-      <div className="download-device"><Phone active={1} labels={t.stageLabels}/></div>
-    </section>
+      <section className="faq section-pad" id="faq">
+        <div className="faq-heading reveal"><p className="kicker">FAQ GONILAI</p><h2>Yang sering<br /><em>ditanyakan.</em></h2><p>Masih butuh bantuan? Hubungi GoNilai Caroline melalui Messenger.</p><a href="https://www.facebook.com/gonilaics.my" target="_blank" rel="noreferrer"><img src="/gonilai/messenger.png" alt="" /> Chat dengan Caroline ↗</a></div>
+        <div className="faq-list">
+          {faqs.map((faq, index) => <details className="reveal" key={faq[0]}>
+            <summary><span>{String(index + 1).padStart(2, "0")}</span>{faq[0]}<i>+</i></summary><p>{faq[1]}</p>
+          </details>)}
+        </div>
+      </section>
 
-    <footer><a className="brand" href="#top"><img className="brand-logo" src="/mykedai-logo.png" alt="myKedai" /></a><p>{t.footer}</p><div>{t.nav.map((x,i)=><a key={x} href={["#products", "#story", "#how", "#faq"][i]}>{x}</a>)}</div><small>© 2026 myKedai. {t.rights}</small></footer>
-    <a className="mobile-cta" href="#download">{t.start}<span>↗</span></a>
-  </main>;
+      <section className="contact section-pad" id="kontak">
+        <div className="contact-panel reveal">
+          <p className="kicker light">HUBUNGI GONILAI</p>
+          <h2>Siap kirim sesuatu yang berarti?</h2>
+          <a className="contact-cta" href="https://gonilai.app/" target="_blank" rel="noreferrer">Coba GoNilai <span>↗</span></a>
+          <div className="contact-info">
+            <p>Suite 13-08, Level 13, Menara Q Sentral<br />Jalan Stesen Sentral 2, 50470<br />Kuala Lumpur, Malaysia</p>
+            <p>Company registration number: 1052400-A<br /><a href="mailto:rpg@telin.my">rpg@telin.my</a><br /><a href="tel:+60330036145">+603 30036145</a> (office hour only)</p>
+          </div>
+        </div>
+      </section>
+
+      <footer className="site-footer">
+        <img src="/gonilai/logo.png" alt="GoNilai" />
+        <p>Pembayaran online makin mudah dan murah dengan GoNilai.</p>
+        <div><a href="#produk">Produk</a><a href="#kebijakan">Kebijakan</a><a href="#faq">FAQ</a><a href="#kontak">Kontak</a></div>
+        <small>2020 © GoNilai. All Rights Reserved · Developed by GoNilai Team</small>
+      </footer>
+    </main>
+  );
 }
