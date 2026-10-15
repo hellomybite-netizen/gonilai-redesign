@@ -94,7 +94,6 @@ const faqs = [
   ["PLN apa saja yang bisa dibayar di GoNilai?", "GoNilai hanya menyediakan PLN token saja. Untuk PLN bill belum tersedia untuk masa ini."],
   ["Boleh buat penggadaian di GoNilai?", "GoNilai tidak menyediakan penggadaian."],
   ["Apakah boleh kirim duit melalui GoNilai?", "GoNilai tidak menyediakan pengiriman duit."],
-  ["Apakah ada batas transaksi?", "Semua pembelian tidak memiliki batasan transaksi kecuali e-wallet. Transaksi e-wallet hanya diperbolehkan 3 kali dalam waktu 24 jam."],
 ];
 
 export default function Home() {
