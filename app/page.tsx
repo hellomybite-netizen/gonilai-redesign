@@ -22,58 +22,53 @@ const steps = [
 
 type ProductBrand = {
   name: string;
-  country: "ID" | "MY";
   logo?: string;
   wordmark?: string;
   tone?: string;
   wide?: boolean;
 };
 
-const products: Array<{ number: string; title: string; body: string; brands: ProductBrand[] }> = [
+const products: Array<{ title: string; body: string; brands: ProductBrand[] }> = [
   {
-    number: "01",
     title: "Isi Pulsa",
     body: "Isi ulang pulsa Indonesia dan Malaysia makin mudah dan hemat dengan GoNilai.",
     brands: [
-      { name: "Telkomsel", logo: "https://upload.wikimedia.org/wikipedia/commons/1/11/Logo_TELKOMSEL.svg", country: "ID" },
-      { name: "Indosat", logo: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Indosat_Ooredoo_Hutchison.png", country: "ID" },
-      { name: "XL Axiata", logo: "https://upload.wikimedia.org/wikipedia/commons/2/27/XL_Axiata_2014.svg", country: "ID" },
-      { name: "Smartfren", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Smartfren_logo.svg", country: "ID" },
-      { name: "Celcom", logo: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Celcom_logo.svg", country: "MY" },
-      { name: "Maxis", logo: "https://upload.wikimedia.org/wikipedia/commons/7/76/Maxis-logo.png", country: "MY" },
-      { name: "U Mobile", wordmark: "U Mobile", country: "MY", tone: "umobile" },
-      { name: "Unifi Mobile", wordmark: "unifi", country: "MY", tone: "unifi" },
+      { name: "Telkomsel", logo: "https://upload.wikimedia.org/wikipedia/commons/1/11/Logo_TELKOMSEL.svg" },
+      { name: "Indosat", logo: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Indosat_Ooredoo_Hutchison.png" },
+      { name: "XL Axiata", logo: "https://upload.wikimedia.org/wikipedia/commons/2/27/XL_Axiata_2014.svg" },
+      { name: "Smartfren", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Smartfren_logo.svg" },
+      { name: "Celcom", logo: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Celcom_logo.svg" },
+      { name: "Maxis", logo: "https://upload.wikimedia.org/wikipedia/commons/7/76/Maxis-logo.png" },
+      { name: "U Mobile", wordmark: "U Mobile", tone: "umobile" },
+      { name: "Unifi Mobile", wordmark: "unifi", tone: "unifi" },
     ],
   },
   {
-    number: "02",
     title: "Paket Data",
     body: "Beli paket data operator Indonesia dan Malaysia agar keluarga selalu terkoneksi.",
     brands: [
-      { name: "Telkomsel", logo: "https://upload.wikimedia.org/wikipedia/commons/1/11/Logo_TELKOMSEL.svg", country: "ID" },
-      { name: "XL Axiata", logo: "https://upload.wikimedia.org/wikipedia/commons/2/27/XL_Axiata_2014.svg", country: "ID" },
-      { name: "Smartfren", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Smartfren_logo.svg", country: "ID" },
-      { name: "Celcom", logo: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Celcom_logo.svg", country: "MY" },
-      { name: "Maxis", logo: "https://upload.wikimedia.org/wikipedia/commons/7/76/Maxis-logo.png", country: "MY" },
-      { name: "Hotlink", wordmark: "hotlink", country: "MY", tone: "hotlink" },
+      { name: "Telkomsel", logo: "https://upload.wikimedia.org/wikipedia/commons/1/11/Logo_TELKOMSEL.svg" },
+      { name: "XL Axiata", logo: "https://upload.wikimedia.org/wikipedia/commons/2/27/XL_Axiata_2014.svg" },
+      { name: "Smartfren", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Smartfren_logo.svg" },
+      { name: "Celcom", logo: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Celcom_logo.svg" },
+      { name: "Maxis", logo: "https://upload.wikimedia.org/wikipedia/commons/7/76/Maxis-logo.png" },
+      { name: "Hotlink", wordmark: "hotlink", tone: "hotlink" },
     ],
   },
   {
-    number: "03",
     title: "Token PLN",
     body: "Pastikan listrik selalu nyala di rumah dengan isi ulang token PLN tepat waktu.",
     brands: [
-      { name: "PLN", logo: "https://upload.wikimedia.org/wikipedia/commons/2/20/Logo_PLN.svg", country: "ID", wide: true },
+      { name: "PLN", logo: "https://upload.wikimedia.org/wikipedia/commons/2/20/Logo_PLN.svg", wide: true },
     ],
   },
   {
-    number: "04",
     title: "Voucher",
     body: "Belanja kebutuhan harian dari Indomaret, Alfamart, Carrefour, dan pilihan lainnya.",
     brands: [
-      { name: "Indomaret", logo: "https://upload.wikimedia.org/wikipedia/commons/4/44/Indomaret.svg", country: "ID", wide: true },
-      { name: "Alfamart", logo: "https://upload.wikimedia.org/wikipedia/commons/8/86/Alfamart_logo.svg", country: "ID", wide: true },
-      { name: "Carrefour", wordmark: "Carrefour", country: "ID", tone: "carrefour", wide: true },
+      { name: "Indomaret", logo: "https://upload.wikimedia.org/wikipedia/commons/4/44/Indomaret.svg", wide: true },
+      { name: "Alfamart", logo: "https://upload.wikimedia.org/wikipedia/commons/8/86/Alfamart_logo.svg", wide: true },
+      { name: "Carrefour", wordmark: "Carrefour", tone: "carrefour", wide: true },
     ],
   },
 ];
@@ -261,11 +256,9 @@ export default function Home() {
         <div className="product-grid">
           {products.map((product, index) => (
             <article className={`product-card reveal ${index === 0 ? "featured" : ""}`} key={product.title}>
-              <span>{product.number}</span>
               <div className={`product-brands ${product.brands.length === 1 ? "single" : ""}`} aria-label={`Operator dan merek untuk ${product.title}`}>
                 {product.brands.map((brand) => (
-                  <div className={`brand-chip ${brand.wide ? "wide" : ""}`} key={brand.name} title={`${brand.name} · ${brand.country}`}>
-                    <small>{brand.country}</small>
+                  <div className={`brand-chip ${brand.wide ? "wide" : ""}`} key={brand.name} title={brand.name}>
                     {brand.logo
                       ? <img src={brand.logo} alt={brand.name} loading="lazy" />
                       : <strong className={`brand-wordmark ${brand.tone}`}>{brand.wordmark}</strong>}

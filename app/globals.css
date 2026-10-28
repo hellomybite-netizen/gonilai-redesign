@@ -96,7 +96,7 @@ main { overflow: hidden; }
 .step-card { min-height: 450px; padding: 32px 36px 40px 0; border-right: 1px solid var(--line); }
 .step-card+article { padding-left: 36px; }
 .step-card:last-child { border-right: 0; }
-.step-card>span, .product-card>span { color: #99a0b1; font-size: 10px; font-weight: 750; }
+.step-card>span { color: #99a0b1; font-size: 10px; font-weight: 750; }
 .step-icon { display: grid; place-items: center; width: 80px; height: 80px; margin: 70px 0 60px; border: 1px solid var(--line); border-radius: 24px; background: white; box-shadow: 0 16px 40px rgba(23,47,105,.08); color: var(--blue); font-size: 24px; font-weight: 700; }
 .step-card h3, .product-card h3 { margin: 0 0 15px; font-size: 28px; letter-spacing: -.04em; }
 .step-card p, .product-card p { max-width: 390px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
@@ -121,9 +121,8 @@ main { overflow: hidden; }
 .product-card.featured { background: var(--navy); color: white; }
 .product-card.featured p { color: #aebbd6; }
 .product-brands { height: 225px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: center; gap: 8px; padding: 20px 0; }
-.brand-chip { position: relative; min-width: 0; min-height: 42px; display: flex; align-items: center; justify-content: center; padding: 8px 19px 8px 8px; overflow: hidden; border: 1px solid rgba(18,27,49,.09); border-radius: 12px; background: #fff; box-shadow: 0 8px 20px rgba(18,27,49,.06); }
+.brand-chip { position: relative; min-width: 0; min-height: 42px; display: flex; align-items: center; justify-content: center; padding: 8px; overflow: hidden; border: 1px solid rgba(18,27,49,.09); border-radius: 12px; background: #fff; box-shadow: 0 8px 20px rgba(18,27,49,.06); }
 .brand-chip.wide { grid-column: span 2; }
-.brand-chip>small { position: absolute; top: 5px; right: 6px; color: #8b93a5; font-size: 6px; font-weight: 850; letter-spacing: .06em; }
 .brand-chip img { display: block; width: 82%; height: 25px; object-fit: contain; }
 .brand-chip.wide img { width: 72%; height: 31px; }
 .product-brands.single .brand-chip { min-height: 130px; }
