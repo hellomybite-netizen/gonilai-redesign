@@ -103,12 +103,12 @@ main { overflow: hidden; }
 .about { padding-top: 20px; padding-bottom: 20px; }
 .about-panel { padding: 100px 6vw 60px; border-radius: 34px; background: var(--blue); color: white; }
 .about-panel::after { content: "10"; display: block; margin-top: 38px; color: rgba(255,255,255,.07); font-size: 28vw; line-height: .7; letter-spacing: -.12em; font-weight: 800; text-align: right; }
-.about-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr); gap: 40px; }
+.about-intro { display: block; }
 .about-intro>*, .about-body>* { min-width: 0; }
 .kicker.light { color: #b8d0ff; }
-.about h2 { width: 100%; max-width: 980px; overflow-wrap: break-word; text-wrap: balance; }
+.about h2 { width: 100%; max-width: 1200px; margin-top: 28px; overflow-wrap: break-word; text-wrap: balance; }
 .about h2 em, .testimonials h2 em { color: var(--yellow); }
-.about-body { display: grid; grid-template-columns: repeat(3, 1fr); gap: 45px; margin: 85px 0 0 32%; padding-top: 35px; border-top: 1px solid rgba(255,255,255,.23); }
+.about-body { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 45px; margin: 70px 0 0; padding-top: 35px; border-top: 1px solid rgba(255,255,255,.23); }
 .about-body p { margin: 0; color: #d0dcf6; font-size: 13px; line-height: 1.75; }
 .about-slogan { display: flex; justify-content: space-between; align-items: center; margin-top: 80px; padding: 28px 0; border-top: 1px solid rgba(255,255,255,.2); border-bottom: 1px solid rgba(255,255,255,.2); font-size: clamp(25px, 4.2vw, 65px); font-weight: 700; letter-spacing: -.04em; }
 .about-slogan i { color: var(--yellow); font-style: normal; }
@@ -242,9 +242,7 @@ main { overflow: hidden; }
   .section-heading, .product-heading { grid-template-columns: 1fr 1.7fr; }
   .section-heading>p:last-child { grid-column: 2; }
   .product-grid { grid-template-columns: 1fr 1fr; }
-  .about-intro { grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: 28px; }
   .about h2 { font-size: clamp(52px, 7.2vw, 76px); }
-  .about-body { margin-left: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .news-grid { grid-template-columns: 1fr 1fr; }
   .news-card:first-child { grid-column: 1 / -1; }
   .policy-heading { grid-template-columns: 1fr 2fr; }
