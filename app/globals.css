@@ -40,7 +40,8 @@ main { overflow: hidden; }
   display: inline-flex; align-items: center; justify-content: center; gap: 22px; border-radius: 17px; font-weight: 700; transition: transform .25s, box-shadow .25s, background .25s;
 }
 .header-cta { min-height: 58px; padding: 0 20px 0 24px; background: var(--blue); color: white; font-size: 13px; }
-.header-cta span, .primary-button span, .contact-cta span { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--yellow); color: var(--navy); }
+.gonilai-mark { position: relative; display: inline-block; flex: 0 0 auto; width: 32px; height: 32px; overflow: hidden; border-radius: 50%; box-shadow: 0 5px 14px rgba(8,26,67,.18); }
+.gonilai-mark img { position: absolute; top: -26%; left: -141%; width: auto; max-width: none; height: 138%; }
 .header-cta:hover, .primary-button:hover, .dark-button:hover, .contact-cta:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(14,50,149,.24); }
 .menu-button { display: none; border: 0; background: none; width: 45px; height: 45px; padding: 12px; }
 .menu-button span { display: block; height: 2px; margin: 6px 0; background: var(--ink); }
@@ -119,11 +120,22 @@ main { overflow: hidden; }
 .product-card:hover { transform: translateY(-8px); box-shadow: 0 28px 70px rgba(22,50,117,.12); }
 .product-card.featured { background: var(--navy); color: white; }
 .product-card.featured p { color: #aebbd6; }
-.product-mark { height: 225px; display: grid; place-items: center; color: var(--blue); font-size: 120px; font-weight: 250; }
-.featured .product-mark { color: var(--yellow); }
+.product-brands { height: 225px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: center; gap: 8px; padding: 20px 0; }
+.brand-chip { position: relative; min-width: 0; min-height: 42px; display: flex; align-items: center; justify-content: center; padding: 8px 19px 8px 8px; overflow: hidden; border: 1px solid rgba(18,27,49,.09); border-radius: 12px; background: #fff; box-shadow: 0 8px 20px rgba(18,27,49,.06); }
+.brand-chip.wide { grid-column: span 2; }
+.brand-chip>small { position: absolute; top: 5px; right: 6px; color: #8b93a5; font-size: 6px; font-weight: 850; letter-spacing: .06em; }
+.brand-chip img { display: block; width: 82%; height: 25px; object-fit: contain; }
+.brand-chip.wide img { width: 72%; height: 31px; }
+.product-brands.single .brand-chip { min-height: 130px; }
+.product-brands.single .brand-chip img { width: 78%; height: 80px; }
+.brand-wordmark { font-size: 13px; line-height: 1; white-space: nowrap; }
+.brand-wordmark.umobile { color: #eb1c4f; font-style: italic; font-weight: 900; }
+.brand-wordmark.unifi { color: #f37021; font-weight: 900; letter-spacing: -.06em; }
+.brand-wordmark.hotlink { color: #e31b23; font-style: italic; font-weight: 900; letter-spacing: -.05em; }
+.brand-wordmark.carrefour { color: #15509f; font-size: 17px; font-weight: 850; letter-spacing: -.05em; }
 .product-card a { position: absolute; left: 28px; right: 28px; bottom: 26px; display: flex; justify-content: space-between; align-items: center; padding-top: 18px; border-top: 1px solid var(--line); font-size: 11px; font-weight: 750; }
 .product-card.featured a { border-color: rgba(255,255,255,.18); }
-.product-card a b { font-size: 22px; }
+.product-card a .gonilai-mark { width: 26px; height: 26px; }
 
 .seven { padding-top: 15px; padding-bottom: 80px; }
 .seven-panel { min-height: 650px; position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; border-radius: 34px; background: var(--yellow); }
@@ -202,7 +214,7 @@ main { overflow: hidden; }
 .faq-heading h2 { margin: 22px 0 28px; font-size: clamp(55px, 6vw, 88px); }
 .faq-heading>p:not(.kicker) { max-width: 390px; color: var(--muted); font-size: 13px; line-height: 1.7; }
 .faq-heading>a { display: inline-flex; align-items: center; gap: 10px; margin-top: 15px; font-size: 12px; font-weight: 750; }
-.faq-heading>a img { width: 28px; height: 28px; }
+.faq-heading>a>.gonilai-mark { width: 28px; height: 28px; }
 .faq-list { border-top: 1px solid var(--line); }
 .faq-list details { border-bottom: 1px solid var(--line); }
 .faq-list summary { min-height: 92px; display: grid; grid-template-columns: 50px 1fr 30px; align-items: center; gap: 15px; cursor: pointer; list-style: none; font-size: 16px; font-weight: 680; }
@@ -290,7 +302,9 @@ main { overflow: hidden; }
   .about-panel::after { font-size: 55vw; }
   .product-grid { grid-template-columns: 1fr; }
   .product-card { min-height: 445px; }
-  .product-mark { height: 175px; }
+  .product-brands { height: 200px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .brand-chip.wide { grid-column: span 2; }
+  .product-brands.single .brand-chip { grid-column: 1 / -1; min-height: 115px; }
   .seven { padding-bottom: 60px; }
   .seven-panel { grid-template-columns: 1fr; border-radius: 24px; }
   .seven-copy { padding: 70px 22px 20px; }

@@ -20,12 +20,67 @@ const steps = [
   },
 ];
 
-const products = [
-  { number: "01", title: "Isi Pulsa", body: "Isi ulang pulsa makin mudah dan hemat dengan GoNilai.", mark: "↗" },
-  { number: "02", title: "Paket Data", body: "Beli paket data untuk keluarga atau sahabat agar selalu terkoneksi.", mark: "⌁" },
-  { number: "03", title: "Token PLN", body: "Pastikan listrik selalu nyala di rumah dengan isi ulang token PLN tepat waktu.", mark: "ϟ" },
-  { number: "04", title: "Voucher", body: "Belanja kebutuhan harian dari Indomaret, Alfamart, Carrefour, dan pilihan lainnya.", mark: "✦" },
+type ProductBrand = {
+  name: string;
+  country: "ID" | "MY";
+  logo?: string;
+  wordmark?: string;
+  tone?: string;
+  wide?: boolean;
+};
+
+const products: Array<{ number: string; title: string; body: string; brands: ProductBrand[] }> = [
+  {
+    number: "01",
+    title: "Isi Pulsa",
+    body: "Isi ulang pulsa Indonesia dan Malaysia makin mudah dan hemat dengan GoNilai.",
+    brands: [
+      { name: "Telkomsel", logo: "https://upload.wikimedia.org/wikipedia/commons/1/11/Logo_TELKOMSEL.svg", country: "ID" },
+      { name: "Indosat", logo: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Indosat_Ooredoo_Hutchison.png", country: "ID" },
+      { name: "XL Axiata", logo: "https://upload.wikimedia.org/wikipedia/commons/2/27/XL_Axiata_2014.svg", country: "ID" },
+      { name: "Smartfren", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Smartfren_logo.svg", country: "ID" },
+      { name: "Celcom", logo: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Celcom_logo.svg", country: "MY" },
+      { name: "Maxis", logo: "https://upload.wikimedia.org/wikipedia/commons/7/76/Maxis-logo.png", country: "MY" },
+      { name: "U Mobile", wordmark: "U Mobile", country: "MY", tone: "umobile" },
+      { name: "Unifi Mobile", wordmark: "unifi", country: "MY", tone: "unifi" },
+    ],
+  },
+  {
+    number: "02",
+    title: "Paket Data",
+    body: "Beli paket data operator Indonesia dan Malaysia agar keluarga selalu terkoneksi.",
+    brands: [
+      { name: "Telkomsel", logo: "https://upload.wikimedia.org/wikipedia/commons/1/11/Logo_TELKOMSEL.svg", country: "ID" },
+      { name: "XL Axiata", logo: "https://upload.wikimedia.org/wikipedia/commons/2/27/XL_Axiata_2014.svg", country: "ID" },
+      { name: "Smartfren", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Smartfren_logo.svg", country: "ID" },
+      { name: "Celcom", logo: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Celcom_logo.svg", country: "MY" },
+      { name: "Maxis", logo: "https://upload.wikimedia.org/wikipedia/commons/7/76/Maxis-logo.png", country: "MY" },
+      { name: "Hotlink", wordmark: "hotlink", country: "MY", tone: "hotlink" },
+    ],
+  },
+  {
+    number: "03",
+    title: "Token PLN",
+    body: "Pastikan listrik selalu nyala di rumah dengan isi ulang token PLN tepat waktu.",
+    brands: [
+      { name: "PLN", logo: "https://upload.wikimedia.org/wikipedia/commons/2/20/Logo_PLN.svg", country: "ID", wide: true },
+    ],
+  },
+  {
+    number: "04",
+    title: "Voucher",
+    body: "Belanja kebutuhan harian dari Indomaret, Alfamart, Carrefour, dan pilihan lainnya.",
+    brands: [
+      { name: "Indomaret", logo: "https://upload.wikimedia.org/wikipedia/commons/4/44/Indomaret.svg", country: "ID", wide: true },
+      { name: "Alfamart", logo: "https://upload.wikimedia.org/wikipedia/commons/8/86/Alfamart_logo.svg", country: "ID", wide: true },
+      { name: "Carrefour", wordmark: "Carrefour", country: "ID", tone: "carrefour", wide: true },
+    ],
+  },
 ];
+
+function GoNilaiMessengerMark() {
+  return <span className="gonilai-mark" aria-hidden="true"><img src="/gonilai/logo.png" alt="" /></span>;
+}
 
 const testimonials = [
   { quote: "Gonilai panceng OK MURAH SENANG GUNANYA MARI RAMAI2 GUNA GONILAI YG LAIN LEWAT", name: "Morsyid Morsyid", image: "/gonilai/morsyid.png" },
@@ -126,7 +181,7 @@ export default function Home() {
           <a href="#berita" onClick={() => setMenuOpen(false)}>Berita</a>
           <a href="#faq" onClick={() => setMenuOpen(false)}>FAQ</a>
         </nav>
-        <a className="header-cta" href="https://gonilai.app/" target="_blank" rel="noreferrer">Coba Sekarang <span>↗</span></a>
+        <a className="header-cta" href="https://gonilai.app/" target="_blank" rel="noreferrer">Coba Sekarang <GoNilaiMessengerMark /></a>
         <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Buka navigasi">
           <span /><span />
         </button>
@@ -140,7 +195,7 @@ export default function Home() {
             <h1>Pembayaran online makin <em>mudah</em> dan <em>murah.</em></h1>
             <p className="hero-body">Kirim pulsa, paket data, voucher, dan token PLN untuk orang tersayang—langsung dari Malaysia.</p>
             <div className="hero-actions">
-              <a className="primary-button" href="https://gonilai.app/" target="_blank" rel="noreferrer">Mulai di GoNilai <span>↗</span></a>
+              <a className="primary-button" href="https://gonilai.app/" target="_blank" rel="noreferrer">Mulai di GoNilai <GoNilaiMessengerMark /></a>
               <a className="secondary-button" href="#cara-beli">Lihat cara beli <span>↓</span></a>
             </div>
           </div>
@@ -207,10 +262,19 @@ export default function Home() {
           {products.map((product, index) => (
             <article className={`product-card reveal ${index === 0 ? "featured" : ""}`} key={product.title}>
               <span>{product.number}</span>
-              <div className="product-mark">{product.mark}</div>
+              <div className={`product-brands ${product.brands.length === 1 ? "single" : ""}`} aria-label={`Operator dan merek untuk ${product.title}`}>
+                {product.brands.map((brand) => (
+                  <div className={`brand-chip ${brand.wide ? "wide" : ""}`} key={brand.name} title={`${brand.name} · ${brand.country}`}>
+                    <small>{brand.country}</small>
+                    {brand.logo
+                      ? <img src={brand.logo} alt={brand.name} loading="lazy" />
+                      : <strong className={`brand-wordmark ${brand.tone}`}>{brand.wordmark}</strong>}
+                  </div>
+                ))}
+              </div>
               <h3>{product.title}</h3>
               <p>{product.body}</p>
-              <a href="https://gonilai.app/" target="_blank" rel="noreferrer" aria-label={`Beli ${product.title}`}>Pilih produk <b>↗</b></a>
+              <a href="https://gonilai.app/" target="_blank" rel="noreferrer" aria-label={`Beli ${product.title}`}>Pilih produk <GoNilaiMessengerMark /></a>
             </article>
           ))}
         </div>
@@ -222,7 +286,7 @@ export default function Home() {
             <p className="kicker">BAYAR TUNAI DI 7-ELEVEN</p>
             <h2>Tak punya rekening? <em>Tetap bisa.</em></h2>
             <p>Pilih pembayaran 7-Eleven di GoNilai, tunjukkan barcode di kasir toko terdekat di seluruh Malaysia, lalu produk akan segera dikirimkan ke nomor tujuan.</p>
-            <a className="dark-button" href="https://gonilai.app/" target="_blank" rel="noreferrer">Buat barcode <span>↗</span></a>
+            <a className="dark-button" href="https://gonilai.app/" target="_blank" rel="noreferrer">Buat barcode <GoNilaiMessengerMark /></a>
           </div>
           <div className="seven-visual" aria-hidden="true">
             <div className="barcode"><span>GONILAI</span><div>{Array.from({ length: 31 }, (_, i) => <i key={i} style={{ width: i % 4 === 0 ? 5 : i % 3 === 0 ? 3 : 2 }} />)}</div><b>7 1103 0061 450</b></div>
@@ -267,7 +331,7 @@ export default function Home() {
       </section>
 
       <section className="faq section-pad" id="faq">
-        <div className="faq-heading reveal"><p className="kicker">FAQ GONILAI</p><h2>Yang sering<br /><em>ditanyakan.</em></h2><p>Masih butuh bantuan? Hubungi GoNilai Caroline melalui Messenger.</p><a href="https://www.facebook.com/gonilaics.my" target="_blank" rel="noreferrer"><img src="/gonilai/messenger.png" alt="" /> Chat dengan Caroline ↗</a></div>
+        <div className="faq-heading reveal"><p className="kicker">FAQ GONILAI</p><h2>Yang sering<br /><em>ditanyakan.</em></h2><p>Masih butuh bantuan? Hubungi GoNilai Caroline melalui Messenger.</p><a href="https://www.facebook.com/gonilaics.my" target="_blank" rel="noreferrer"><GoNilaiMessengerMark /> Chat dengan Caroline</a></div>
         <div className="faq-list">
           {faqs.map((faq, index) => <details className="reveal" key={faq[0]}>
             <summary><span>{String(index + 1).padStart(2, "0")}</span>{faq[0]}<i>+</i></summary><p>{faq[1]}</p>
@@ -279,7 +343,7 @@ export default function Home() {
         <div className="contact-panel reveal">
           <p className="kicker light">HUBUNGI GONILAI</p>
           <h2>Siap kirim sesuatu yang berarti?</h2>
-          <a className="contact-cta" href="https://gonilai.app/" target="_blank" rel="noreferrer">Coba GoNilai <span>↗</span></a>
+          <a className="contact-cta" href="https://gonilai.app/" target="_blank" rel="noreferrer">Coba GoNilai <GoNilaiMessengerMark /></a>
           <div className="contact-info">
             <p>Suite 13-08, Level 13, Menara Q Sentral<br />Jalan Stesen Sentral 2, 50470<br />Kuala Lumpur, Malaysia</p>
             <p>Company registration number: 1052400-A<br /><a href="mailto:rpg@telin.my">rpg@telin.my</a><br /><a href="tel:+60330036145">+603 30036145</a> (office hour only)</p>
